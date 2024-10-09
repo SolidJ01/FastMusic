@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="this"
+             x:Class="FastMusicMobile.Controls.MusicCollectionButton">
+    <Grid RowDefinitions="auto, auto" 
+          WidthRequest="90"
+          BindingContext="{x:Reference this}"
+          RowSpacing="5">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Command}" />
+        </Grid.GestureRecognizers>
+        
+        <Border HeightRequest="{Binding Width, Source={RelativeSource Self}}" Background="{StaticResource Gradient}">
+            <Label Text="{Binding Icon}" FontFamily="FASolid" FontSize="43" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
+        <Label Grid.Row="1" Text="{Binding Name}" FontSize="12" FontAttributes="Bold" HorizontalTextAlignment="Center" MaxLines="2" LineBreakMode="TailTruncation" />
+    </Grid>
+</ContentView>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:FastMusicMobile.Controls"
+             x:Class="FastMusicMobile.MainPage">
+
+    <Grid RowDefinitions="*, 50"
+          RowSpacing="10"
+          Padding="10"
+          BackgroundColor="{StaticResource Secondary}">
+
+        <ScrollView Orientation="Vertical">
+            <VerticalStackLayout Spacing="10">
+                <controls:IconButton Title="Albums" Icon="&#xf51f;" />
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="10"
+                                           Margin="0,0,0,5">
+                        <controls:MusicCollectionButton Name="Halo: Combat Evolved (Original Soundtrack)" Icon="&#xf51f;" />
+                        <controls:MusicCollectionButton Name="Halo 2 (Original Soundtrack)" Icon="&#xf51f;" />
+                        <controls:MusicCollectionButton Name="Halo 3 (Original Game Soundtrack)" Icon="&#xf51f;" />
+                        <controls:MusicCollectionButton Name="Halo 3 ODST (Original Game Soundtrack)" Icon="&#xf51f;" />
+                        <controls:MusicCollectionButton Name="Halo Reach (Original Game Soundtrack)" Icon="&#xf51f;" />
+                    </HorizontalStackLayout>
+                </ScrollView>
+                <controls:IconButton Title="Playlists" Icon="&#xf03a;" />
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="10"
+                                           Margin="0,0,0,5">
+                        <controls:MusicCollectionButton Name="Chill Vibes" Icon="&#xf03a;" />
+                        <controls:MusicCollectionButton Name="Neon Synthwave" Icon="&#xf03a;" />
+                        <controls:MusicCollectionButton Name="Lofi Study Beats" Icon="&#xf03a;" />
+                    </HorizontalStackLayout>
+                </ScrollView>
+                <controls:IconButton Title="Songs" Icon="&#xf001;" />
+                <VerticalStackLayout Spacing="10">
+                    <controls:SongButton Title="In Amber Clad" Artist="Martin O'Donnell, Michael Salvatori" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <Grid ColumnDefinitions="50, *, 50"
+              ColumnSpacing="10"
+              Grid.Row="1">
+            <controls:IconButtonSmall Icon="&#xf0c9;" />
+
+            <controls:IconButtonSmall Icon="&#xf04b;" Grid.Column="2" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
