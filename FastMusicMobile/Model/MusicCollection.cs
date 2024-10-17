@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FastMusicMobile.Model
 {
-    internal abstract class MusicCollection
+    public abstract class MusicCollection
     {
         private string _name;
         public string Name { get =>  _name; }

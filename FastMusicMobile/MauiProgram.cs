@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FastMusicMobile.Services;
+using FastMusicMobile.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace FastMusicMobile
 {
@@ -15,6 +17,10 @@ namespace FastMusicMobile
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FASolid");
                 });
+
+            builder.Services.AddSingleton<FileService>();
+            builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

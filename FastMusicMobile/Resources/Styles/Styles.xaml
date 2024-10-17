@@ -11,6 +11,7 @@
 
     <Style TargetType="Border">
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="StrokeShape" Value="RoundRectangle 8" />
         <Setter Property="Shadow">
             <Setter.Value>

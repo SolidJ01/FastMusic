@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FastMusicMobile.Model
+namespace FastMusicMobile.Services
 {
-    public class Album(string name) : MusicCollection(name)
+    internal interface IFileService
     {
     }
 }

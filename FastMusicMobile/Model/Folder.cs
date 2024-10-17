@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace FastMusicMobile.Model
 {
-    public class Album(string name) : MusicCollection(name)
+    internal class Folder
     {
+        public int Id { get; set; }
+        public string Path { get; set; }
+        public List<Song> Songs { get; set; }
     }
 }
