@@ -9,12 +9,16 @@ namespace FastMusicMobile.ViewModel
 {
     public class MainPageViewModel : BindableObject
     {
-        private FileService _fileService;
+        private AudioMasterService _audioService;
 
-        public MainPageViewModel(FileService fileService)
+        public MainPageViewModel(AudioMasterService audioService)
         {
-            _fileService = fileService;
-            _fileService.IndexMusic();
+            _audioService = audioService;
+        }
+
+        public async Task Initialize()
+        {
+            await _audioService.Initialize();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace FastMusicMobile
                     fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FASolid");
                 });
 
-            builder.Services.AddSingleton<FileService>();
+            builder.Services.AddSingleton<AudioMasterService>();
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddSingleton<MainPage>();
 
