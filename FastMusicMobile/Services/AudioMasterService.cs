@@ -24,11 +24,12 @@ namespace FastMusicMobile.Services
 
         public async Task Initialize()
         {
-            await Task.Run(() =>
-            {
-                _songs = _audioService.GetSongs().Result;
-                Debug.WriteLine($" ||| SONGS INDEXED: {_songs.Count}");
-            });
+            _songs = await _audioService.GetSongs();
+            //await Task.Run(() =>
+            //{
+            //    _songs = _audioService.GetSongs().Result;
+            //    Debug.WriteLine($" ||| SONGS INDEXED: {_songs.Count}");
+            //});
         }
     }
 }

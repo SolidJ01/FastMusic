@@ -7,8 +7,13 @@ using Android.Content.PM;
 using Android.Net;
 using Android.OS;
 using Android.Provider;
+using AndroidX.Activity.Result;
+using AndroidX.Activity.Result.Contract;
+using AndroidX.Core.App;
 using AndroidX.Core.Content;
 using FastMusicMobile.Model;
+using FastMusicMobile.Services.CustomPermissions;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,12 +35,19 @@ namespace FastMusicMobile.Services
 
         public async Task<List<Song>> GetSongs()
         {
-            PermissionStatus permission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            PermissionStatus permission = await Permissions.CheckStatusAsync<ReadMediaAudio>();
 
             if (permission != PermissionStatus.Granted)
             {
-                await Permissions.RequestAsync<Permissions.StorageRead>();
+                permission = await Permissions.RequestAsync<ReadMediaAudio>();
             }
+
+            //  THIS IS THE ONE THAT WORKS
+            //if (ContextCompat.CheckSelfPermission(Platform.CurrentActivity, Manifest.Permission.ReadMediaAudio) != Permission.Granted)
+            //{
+            //    ActivityCompat.RequestPermissions(Platform.CurrentActivity, new string[] { Manifest.Permission.ReadMediaAudio }, 0);
+            //    //AndroidX.Activity.Result.Contract.ActivityResultContracts.RequestPermission() // (NOT THIS ONE)
+            //}
 
             List<Song> songs = new List<Song>();
 
@@ -97,6 +109,14 @@ namespace FastMusicMobile.Services
 
             return songs;
         }
+
+        //public void Initialize()
+        //{
+        //    ActivityResultLauncher activityResultLauncher = ActivityResultCallerKt.RegisterForActivityResult(
+        //        this, 
+        //        new ActivityResultContracts.RequestPermission()
+        //    )
+        //}
 
     }
 }
