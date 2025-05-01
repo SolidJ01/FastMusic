@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:FastMusicMobile.Controls"
-             x:Class="FastMusicMobile.MainPage">
+             xmlns:model="clr-namespace:FastMusicMobile.Model"
+             xmlns:viewmodel="clr-namespace:FastMusicMobile.ViewModel"
+             x:Class="FastMusicMobile.MainPage"
+             x:DataType="viewmodel:MainPageViewModel">
 
     <Grid RowDefinitions="*, 50"
           RowSpacing="10"
@@ -13,7 +16,8 @@
             <VerticalStackLayout Spacing="10">
                 <controls:IconButton Title="Albums" Icon="&#xf51f;" />
                 <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never">
+                            HorizontalScrollBarVisibility="Never"
+                            IsClippedToBounds="False">
                     <HorizontalStackLayout Spacing="10"
                                            Margin="0,0,0,5">
                         <controls:MusicCollectionButton Name="Halo: Combat Evolved (Original Soundtrack)" Icon="&#xf51f;" />
@@ -34,9 +38,20 @@
                     </HorizontalStackLayout>
                 </ScrollView>
                 <controls:IconButton Title="Songs" Icon="&#xf001;" />
-                <VerticalStackLayout Spacing="10">
+                <!--<VerticalStackLayout Spacing="10">
                     <controls:SongButton Title="In Amber Clad" Artist="Martin O'Donnell, Michael Salvatori" />
-                </VerticalStackLayout>
+                </VerticalStackLayout>-->
+                <CollectionView ItemsSource="{Binding Songs}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:Song}">
+                            <controls:SongButton Title="{Binding Name}" Artist="{Binding Artist}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
 

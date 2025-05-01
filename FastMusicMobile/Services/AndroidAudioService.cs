@@ -59,7 +59,8 @@ namespace FastMusicMobile.Services
             string[] projection = new string[]
             {
                 MediaStore.Audio.Media.InterfaceConsts.Id,
-                MediaStore.Audio.Media.InterfaceConsts.DisplayName,
+                MediaStore.Audio.Media.InterfaceConsts.Title,
+                MediaStore.Audio.Media.InterfaceConsts.Artist,
                 MediaStore.Audio.Media.InterfaceConsts.AlbumId, 
                 MediaStore.Audio.Media.InterfaceConsts.IsMusic
             };
@@ -67,14 +68,14 @@ namespace FastMusicMobile.Services
             string[] selectionArgs = new string[] {
                 true.ToString()
             };
-            string sortOrder = MediaStore.Audio.Media.InterfaceConsts.DisplayName + " ASC";
+            string sortOrder = MediaStore.Audio.Media.InterfaceConsts.Title + " ASC";
 
             //MediaStore.Files.GetContentUri(MediaStore.VolumeExternal);
             var cursor = activity.ApplicationContext.ContentResolver.Query( //Android.App.Application.Context.ContentResolver
-                //Build.VERSION.SdkInt >= BuildVersionCodes.Q 
-                //    ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal)
-                //    : MediaStore.Audio.Media.ExternalContentUri, 
-                MediaStore.Audio.Media.ExternalContentUri,
+                Build.VERSION.SdkInt >= BuildVersionCodes.Q 
+                    ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal)
+                    : MediaStore.Audio.Media.ExternalContentUri, 
+                //MediaStore.Audio.Media.ExternalContentUri,
                 projection, 
                 null, 
                 null, 
@@ -84,7 +85,8 @@ namespace FastMusicMobile.Services
             
 
             int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Id);
-            int nameColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.DisplayName);
+            int nameColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Title);
+            int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
             int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.AlbumId);
 
             
@@ -92,6 +94,7 @@ namespace FastMusicMobile.Services
             {
                 long id = cursor.GetLong(idColumn);
                 string name = cursor.GetString(nameColumn);
+                string artist = cursor.GetString(artistColumn);
                 long album = cursor.GetLong(albumColumn);
                 string uri = ContentUris.WithAppendedId(MediaStore.Audio.Media.ExternalContentUri, id).ToString();
 
@@ -99,6 +102,7 @@ namespace FastMusicMobile.Services
                 {
                     Id = id,
                     Name = name,
+                    Artist = artist,
                     URI = uri,
                     AlbumId = album
                 });

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FastMusicMobile.Model
 {
-    internal class Playlist(string name) : MusicCollection(name)
+    public class Playlist(string name) : MusicCollection(name)
     {
     }
 }
