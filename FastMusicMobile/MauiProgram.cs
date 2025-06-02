@@ -1,4 +1,5 @@
 ﻿using FastMusicMobile.Services;
+using FastMusicMobile.View;
 using FastMusicMobile.ViewModel;
 using Microsoft.Extensions.Logging;
 
@@ -19,8 +20,12 @@ namespace FastMusicMobile
                 });
 
             builder.Services.AddSingleton<AudioMasterService>();
+
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddSingleton<MainPage>();
+
+            builder.Services.AddTransient<AlbumsPageViewModel>();
+            builder.Services.AddTransient<AlbumsPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

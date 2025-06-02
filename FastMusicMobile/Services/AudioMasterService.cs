@@ -46,7 +46,27 @@ namespace FastMusicMobile.Services
 
         private async Task IndexAlbums()
         {
+            //_albums = await _audioService.GetAlbums();
 
+            foreach (Song song in _songs)
+            {
+                if (_albums.Any(x => x.ID.Equals(song.AlbumId)))
+                    continue;
+
+                _albums.Add(new Album
+                {
+                    ID = song.AlbumId,
+                    Name = song.AlbumName,
+                    Artist = song.Artist
+                });
+                
+                song.Album = _albums.Last();
+            }
+
+            foreach (Album album in _albums)
+            {
+                album.Songs = _songs.Where(x => x.AlbumId.Equals(album.ID)).ToList();
+            }
         }
 
         private async Task GetPlaylists()

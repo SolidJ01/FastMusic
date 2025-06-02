@@ -12,6 +12,7 @@ namespace FastMusicMobile.Model
         public string Name { get; set; }
         public string Artist { get; set; }
         public long AlbumId { get; set; }
+        public string AlbumName { get; set; }
         public Album? Album { get; set; }
         public string PathInDirectory { get; set; }
         public string URI { get; set; }

@@ -25,6 +25,13 @@ public partial class IconButton : ContentView
 		set => SetValue(CommandProperty, value);
 	}
 
+	public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(IconButton), null);
+	public object CommandParameter
+	{
+		get => GetValue(CommandParameterProperty);
+		set => SetValue(CommandParameterProperty, value);
+	}
+
 	public IconButton()
 	{
 		InitializeComponent();

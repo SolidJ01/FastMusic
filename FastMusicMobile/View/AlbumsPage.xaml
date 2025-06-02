@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:FastMusicMobile.Controls"
+             xmlns:model="clr-namespace:FastMusicMobile.Model"
+             xmlns:viewmodel="clr-namespace:FastMusicMobile.ViewModel"
+             x:Class="FastMusicMobile.View.AlbumsPage"
+             Title="AlbumsPage"
+             x:DataType="viewmodel:AlbumsPageViewModel">
+    <Grid RowDefinitions="*, 60"
+      RowSpacing="0"
+      BackgroundColor="{StaticResource Secondary}"
+      IsClippedToBounds="False">
+        <CollectionView ItemsSource="{Binding Albums}">
+            <CollectionView.Header>
+                <Grid HeightRequest="65" ColumnDefinitions="*, 65" Margin="0, 0, 0, 5">
+                    <HorizontalStackLayout Margin="10,10,10,5">
+                        <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" Margin="7.5,0,7.5,0" />
+                        <Label Text="Albums" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                    </HorizontalStackLayout>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Album}">
+                    <controls:AlbumButton Title="{Binding Name}" Artist="{Binding Artist}" Margin="10,5,10,5" IsClippedToBounds="False" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+        <Grid ColumnDefinitions="50, *, 50"
+          ColumnSpacing="10"
+          Grid.Row="1"
+          Margin="10,0,10,10"
+          IsClippedToBounds="False">
+            <controls:IconButtonSmall Icon="&#xf0c9;" />
+
+            <controls:IconButtonSmall Icon="&#xf04b;" Grid.Column="2" />
+        </Grid>
+    </Grid>
+</ContentPage>

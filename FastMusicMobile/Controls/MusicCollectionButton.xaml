@@ -10,8 +10,8 @@
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding Command}" />
         </Grid.GestureRecognizers>
-        
-        <Border HeightRequest="{Binding Width, Source={RelativeSource Self}}" Background="{StaticResource Gradient}">
+
+        <Border HeightRequest="90" Background="{StaticResource Gradient}"><!--{Binding Width, Source={RelativeSource Self}}-->
             <Label Text="{Binding Icon}" FontFamily="FASolid" FontSize="43" HorizontalOptions="Center" VerticalOptions="Center" />
         </Border>
         <Label Grid.Row="1" Text="{Binding Name}" FontSize="12" FontAttributes="Bold" HorizontalTextAlignment="Center" MaxLines="2" LineBreakMode="TailTruncation" />

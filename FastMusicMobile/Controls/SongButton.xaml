@@ -11,7 +11,10 @@
                 <Border.Shadow>
                     <Shadow Opacity="0" />
                 </Border.Shadow>
-                <Label Text="&#xf001;" FontSize="24" FontFamily="FASolid" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Grid>
+                    <Label Text="&#xf001;" FontSize="24" FontFamily="FASolid" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <Image Aspect="AspectFill" />
+                </Grid>
             </Border>
             <Grid RowDefinitions="auto, auto"
                   Grid.Column="1"

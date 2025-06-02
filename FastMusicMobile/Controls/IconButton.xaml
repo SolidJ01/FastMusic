@@ -7,7 +7,7 @@
            HeightRequest="50"
            Padding="15,0">
         <Border.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding Command}" NumberOfTapsRequired="1" />
+            <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding CommandParameter}" NumberOfTapsRequired="1" />
         </Border.GestureRecognizers>
 
         <Grid ColumnDefinitions="auto, *"

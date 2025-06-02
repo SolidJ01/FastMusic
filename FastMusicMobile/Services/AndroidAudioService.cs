@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Java.Util.Jar.Attributes;
 
 namespace FastMusicMobile.Services
 {
@@ -61,6 +62,7 @@ namespace FastMusicMobile.Services
                 MediaStore.Audio.Media.InterfaceConsts.Id,
                 MediaStore.Audio.Media.InterfaceConsts.Title,
                 MediaStore.Audio.Media.InterfaceConsts.Artist,
+                MediaStore.Audio.Media.InterfaceConsts.Album,
                 MediaStore.Audio.Media.InterfaceConsts.AlbumId, 
                 MediaStore.Audio.Media.InterfaceConsts.IsMusic
             };
@@ -87,7 +89,8 @@ namespace FastMusicMobile.Services
             int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Id);
             int nameColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Title);
             int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
-            int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.AlbumId);
+            int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Album);
+            int albumIdColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.AlbumId);
 
             
             while (cursor.MoveToNext())
@@ -95,7 +98,8 @@ namespace FastMusicMobile.Services
                 long id = cursor.GetLong(idColumn);
                 string name = cursor.GetString(nameColumn);
                 string artist = cursor.GetString(artistColumn);
-                long album = cursor.GetLong(albumColumn);
+                string album = cursor.GetString(albumColumn);
+                long albumId = cursor.GetLong(albumIdColumn);
                 string uri = ContentUris.WithAppendedId(MediaStore.Audio.Media.ExternalContentUri, id).ToString();
 
                 songs.Add(new Song
@@ -104,7 +108,8 @@ namespace FastMusicMobile.Services
                     Name = name,
                     Artist = artist,
                     URI = uri,
-                    AlbumId = album
+                    AlbumName = album,
+                    AlbumId = albumId
                 });
 
                 System.Diagnostics.Debug.WriteLine($"Indexed song {name}");
@@ -113,14 +118,6 @@ namespace FastMusicMobile.Services
 
             return songs;
         }
-
-        //public void Initialize()
-        //{
-        //    ActivityResultLauncher activityResultLauncher = ActivityResultCallerKt.RegisterForActivityResult(
-        //        this, 
-        //        new ActivityResultContracts.RequestPermission()
-        //    )
-        //}
 
     }
 }
