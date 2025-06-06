@@ -67,6 +67,8 @@ namespace FastMusicMobile.Services
             {
                 album.Songs = _songs.Where(x => x.AlbumId.Equals(album.ID)).ToList();
             }
+
+            _albums = _albums.OrderBy(x => x.Name).ToList();
         }
 
         private async Task GetPlaylists()

@@ -21,11 +21,11 @@ namespace FastMusicMobile
 
             builder.Services.AddSingleton<AudioMasterService>();
 
-            builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<MainPage>();
 
-            builder.Services.AddTransient<AlbumsPageViewModel>();
-            builder.Services.AddTransient<AlbumsPage>();
+            builder.Services.AddSingleton<AlbumsPageViewModel>();
+            builder.Services.AddSingleton<AlbumsPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

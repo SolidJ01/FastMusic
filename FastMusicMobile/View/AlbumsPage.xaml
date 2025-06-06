@@ -7,7 +7,7 @@
              x:Class="FastMusicMobile.View.AlbumsPage"
              Title="AlbumsPage"
              x:DataType="viewmodel:AlbumsPageViewModel">
-    <Grid RowDefinitions="*, 60"
+    <Grid RowDefinitions="*, 70"
       RowSpacing="0"
       BackgroundColor="{StaticResource Secondary}"
       IsClippedToBounds="False">
@@ -15,8 +15,8 @@
             <CollectionView.Header>
                 <Grid HeightRequest="65" ColumnDefinitions="*, 65" Margin="0, 0, 0, 5">
                     <HorizontalStackLayout Margin="10,10,10,5">
-                        <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" Margin="7.5,0,7.5,0" />
-                        <Label Text="Albums" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                        <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,0,10,0" />
+                        <Label Text="Albums" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
                     </HorizontalStackLayout>
                 </Grid>
             </CollectionView.Header>
@@ -31,7 +31,7 @@
         <Grid ColumnDefinitions="50, *, 50"
           ColumnSpacing="10"
           Grid.Row="1"
-          Margin="10,0,10,10"
+          Margin="10,10,10,10"
           IsClippedToBounds="False">
             <controls:IconButtonSmall Icon="&#xf0c9;" />
 

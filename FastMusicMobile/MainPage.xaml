@@ -7,14 +7,18 @@
              x:Class="FastMusicMobile.MainPage"
              x:DataType="viewmodel:MainPageViewModel">
 
-    <Grid RowDefinitions="*, 60"
+    <Grid RowDefinitions="*, 70"
           RowSpacing="0"
           BackgroundColor="{StaticResource Secondary}"
           IsClippedToBounds="False">
 
         <ScrollView Orientation="Vertical">
             <VerticalStackLayout Spacing="10">
-                <controls:IconButton Title="Albums" Icon="&#xf51f;" Command="{Binding NavigateCommand}" CommandParameter="albums" Margin="10,10,10,0" />
+                <HorizontalStackLayout HeightRequest="50" Margin="10,10,10,0">
+                    <Label Text="&#xf015;" FontFamily="FASolid" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,0,10,0" />
+                    <Label Text="Home" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                </HorizontalStackLayout>
+                <controls:IconButton Title="Albums" Icon="&#xf51f;" Command="{Binding NavigateCommand}" CommandParameter="albums" Margin="10,0,10,0" />
                 <CollectionView ItemsSource="{Binding Albums}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal"
@@ -65,7 +69,7 @@
         <Grid ColumnDefinitions="50, *, 50"
               ColumnSpacing="10"
               Grid.Row="1"
-              Margin="10,0,10,10"
+              Margin="10,10,10,10"
               IsClippedToBounds="False">
             <controls:IconButtonSmall Icon="&#xf0c9;" />
 
