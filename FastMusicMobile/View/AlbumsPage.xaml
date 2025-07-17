@@ -11,9 +11,9 @@
       RowSpacing="0"
       BackgroundColor="{StaticResource Secondary}"
       IsClippedToBounds="False">
-        <CollectionView ItemsSource="{Binding Albums}">
+        <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureAllItems">
             <CollectionView.Header>
-                <Grid HeightRequest="65" ColumnDefinitions="*, 65" Margin="0, 0, 0, 5">
+                <Grid HeightRequest="65" ColumnDefinitions="*, 65" Margin="0, 0, 0, 10">
                     <HorizontalStackLayout Margin="10,10,10,5">
                         <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,0,10,0" />
                         <Label Text="Albums" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
@@ -22,7 +22,7 @@
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Album}">
-                    <controls:AlbumButton Title="{Binding Name}" Artist="{Binding Artist}" Margin="10,5,10,5" IsClippedToBounds="False" />
+                    <controls:AlbumButton Title="{Binding Name}" Artist="{Binding Artist}" Thumbnail="{Binding Thumbnail}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumsPageViewModel}}, Path=GoToAlbumCommand}" CommandParameter="{Binding .}" Padding="10,0,10,10" IsClippedToBounds="False" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

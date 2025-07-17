@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FastMusicMobile.ViewModel
 {
@@ -26,14 +27,23 @@ namespace FastMusicMobile.ViewModel
             }
         }
 
+        public ICommand GoToAlbumCommand { get; private set; }
+
         public AlbumsPageViewModel(AudioMasterService audioService)
         {
             _audioService = audioService;
+
+            GoToAlbumCommand = new Command<Album>(GoToAlbum);
         }
 
         public async Task Initialize()
         {
             Albums = new ObservableCollection<Album>(_audioService.Albums);
+        }
+
+        private async void GoToAlbum(Album album)
+        {
+            await Shell.Current.GoToAsync("album", new ShellNavigationQueryParameters { { "Album", album } });
         }
     }
 }

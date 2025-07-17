@@ -4,6 +4,7 @@ using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.Net;
 using Android.OS;
 using Android.Provider;
@@ -100,16 +101,31 @@ namespace FastMusicMobile.Services
                 string artist = cursor.GetString(artistColumn);
                 string album = cursor.GetString(albumColumn);
                 long albumId = cursor.GetLong(albumIdColumn);
-                string uri = ContentUris.WithAppendedId(MediaStore.Audio.Media.ExternalContentUri, id).ToString();
+                Android.Net.Uri uri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, id);
+                Android.Net.Uri albumUri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, albumId);
+                MemoryStream thumbnail = null;
+
+                try
+                {
+                    var bitmap = activity.ApplicationContext.ContentResolver.LoadThumbnail(uri, new Android.Util.Size(300, 300), null);
+                    thumbnail = new MemoryStream();
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 100, thumbnail);
+                    bitmap.Recycle();
+                }
+                catch (Exception e)
+                {
+
+                }
 
                 songs.Add(new Song
                 {
                     Id = id,
                     Name = name,
                     Artist = artist,
-                    URI = uri,
+                    URI = uri.ToString(),
                     AlbumName = album,
-                    AlbumId = albumId
+                    AlbumId = albumId,
+                    Thumbnail = thumbnail?.ToArray()
                 });
 
                 System.Diagnostics.Debug.WriteLine($"Indexed song {name}");

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FastMusicMobile.ViewModel
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

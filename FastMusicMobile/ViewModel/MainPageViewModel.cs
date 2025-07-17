@@ -38,13 +38,17 @@ namespace FastMusicMobile.ViewModel
 
         public ICommand NavigateCommand { private set; get; }
 
+        public ICommand GoToAlbumCommand { private set; get; }
+
         public MainPageViewModel(AudioMasterService audioService)
         {
             _audioService = audioService;
             Songs = new ObservableCollection<Song>();
 
-            NavigateCommand = new Command<string>(
-                execute: (string arg) => Shell.Current.GoToAsync(arg)
+            NavigateCommand = new Command<string>(execute: (string arg) => Navigate(arg, new ShellNavigationQueryParameters()));
+
+            GoToAlbumCommand = new Command<Album>(
+                execute: (Album arg) => Navigate("album", new ShellNavigationQueryParameters { { "Album", arg } })
             );
         }
 
@@ -55,6 +59,11 @@ namespace FastMusicMobile.ViewModel
 
             _audioService.MusicRetrieved += OnMusicRetrieved;
             await _audioService.RetrieveMusic();
+        }
+
+        private async void Navigate(string page, ShellNavigationQueryParameters param)
+        {
+            await Shell.Current.GoToAsync(page, param);
         }
 
         private void OnMusicRetrieved(object? sender, EventArgs e)

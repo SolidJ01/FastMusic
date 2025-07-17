@@ -27,6 +27,9 @@ namespace FastMusicMobile
             builder.Services.AddSingleton<AlbumsPageViewModel>();
             builder.Services.AddSingleton<AlbumsPage>();
 
+            builder.Services.AddTransient<AlbumPageViewModel>();
+            builder.Services.AddTransient<AlbumPage>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

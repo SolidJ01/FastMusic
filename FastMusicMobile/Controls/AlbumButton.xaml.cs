@@ -18,11 +18,25 @@ public partial class AlbumButton : ContentView
 		set => SetValue(ArtistProperty, value);
 	}
 
+	public static readonly BindableProperty ThumbnailProperty = BindableProperty.Create(nameof(Thumbnail), typeof(Byte[]), typeof(AlbumButton), null);
+	public Byte[] Thumbnail
+	{
+		get => (Byte[])GetValue(ThumbnailProperty);
+		set => SetValue(ThumbnailProperty, value);
+	}
+
 	public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(AlbumButton), null);
 	public ICommand Command
 	{
 		get => (ICommand)GetValue(CommandProperty);
 		set => SetValue(CommandProperty, value);
+	}
+
+	public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AlbumButton), null);
+	public object CommandParameter
+	{
+		get => GetValue(CommandParameterProperty);
+		set => SetValue(CommandParameterProperty, value);
 	}
 
 	public AlbumButton()

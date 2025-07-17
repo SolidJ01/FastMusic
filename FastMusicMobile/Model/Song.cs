@@ -16,5 +16,6 @@ namespace FastMusicMobile.Model
         public Album? Album { get; set; }
         public string PathInDirectory { get; set; }
         public string URI { get; set; }
+        public Byte[] Thumbnail { get; set; }
     }
 }

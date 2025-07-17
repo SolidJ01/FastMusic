@@ -16,6 +16,13 @@ public partial class SongButton : ContentView
 		set => SetValue(ArtistProperty, value);
 	}
 
+	public static readonly BindableProperty ThumbnailProperty = BindableProperty.Create(nameof(Thumbnail), typeof(Byte[]), typeof(SongButton), null);
+	public Byte[] Thumbnail
+	{
+		get => (Byte[])GetValue(ThumbnailProperty);
+		set => SetValue(ThumbnailProperty, value);
+	}
+
 	public SongButton()
 	{
 		InitializeComponent();

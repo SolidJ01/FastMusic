@@ -10,7 +10,7 @@
     <Color x:Key="PrimaryLight">#596066</Color>
     <Color x:Key="Secondary">#2D3237</Color>
     <Color x:Key="Text">#fff</Color>
-    <Color x:Key="Shadow">#33000000</Color>
+    <Color x:Key="Shadow">#000000</Color>
 
     <Color x:Key="Orange500">#FF7A1A</Color>
 

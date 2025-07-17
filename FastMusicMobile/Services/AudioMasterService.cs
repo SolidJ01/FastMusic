@@ -57,7 +57,8 @@ namespace FastMusicMobile.Services
                 {
                     ID = song.AlbumId,
                     Name = song.AlbumName,
-                    Artist = song.Artist
+                    Artist = song.Artist, 
+                    Thumbnail = song.Thumbnail
                 });
                 
                 song.Album = _albums.Last();

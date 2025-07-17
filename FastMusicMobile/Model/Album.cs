@@ -12,5 +12,6 @@ namespace FastMusicMobile.Model
         public string Name { get; set; }
         public string Artist { get; set; }
         public List<Song> Songs { get; set; }
+        public Byte[] Thumbnail { get; set; }
     }
 }

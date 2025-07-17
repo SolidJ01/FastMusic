@@ -7,6 +7,7 @@ namespace FastMusicMobile
         public AppShell()
         {
             Routing.RegisterRoute("albums", typeof(AlbumsPage));
+            Routing.RegisterRoute("album", typeof(AlbumPage));
 
             InitializeComponent();
         }

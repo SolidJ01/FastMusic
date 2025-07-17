@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:FastMusicMobile.Controls"
              x:Name="this"
-             x:Class="FastMusicMobile.Controls.SongButton">
+             x:Class="FastMusicMobile.Controls.SongButton"
+             x:DataType="controls:SongButton">
     <Border BindingContext="{x:Reference this}" StrokeThickness="0" HeightRequest="50">
         <Grid ColumnDefinitions="50, *" 
               HeightRequest="50"
@@ -13,16 +15,22 @@
                 </Border.Shadow>
                 <Grid>
                     <Label Text="&#xf001;" FontSize="24" FontFamily="FASolid" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    <Image Aspect="AspectFill" />
+                    <Image Aspect="AspectFill">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="{Binding Thumbnail, Converter={StaticResource StreamConverter}}"/>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </Grid>
             </Border>
-            <Grid RowDefinitions="auto, auto"
-                  Grid.Column="1"
-                  VerticalOptions="Center"
-                  RowSpacing="-5">
+            <FlexLayout Grid.Column="1"
+                        Direction="Column"
+                        JustifyContent="Center"
+                        Padding="0, 0, 10, 0">
                 <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation" />
-                <Label Text="{Binding Artist}" FontSize="10" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" />
-            </Grid>
+                <Label Text="{Binding Artist}" FontSize="10" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" Margin="0, -2, 0, 0" />
+            </FlexLayout>
         </Grid>
     </Border>
 </ContentView>
