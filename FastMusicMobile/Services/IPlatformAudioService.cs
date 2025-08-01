@@ -10,5 +10,6 @@ namespace FastMusicMobile.Services
     public interface IPlatformAudioService
     {
         public Task<List<Song>> GetSongs();
+        public Task<byte[]> GetThumbnail(long id);
     }
 }

@@ -18,7 +18,7 @@
                     <Image Aspect="AspectFill">
                         <Image.Style>
                             <Style TargetType="Image">
-                                <Setter Property="Source" Value="{Binding Thumbnail, Converter={StaticResource StreamConverter}}"/>
+                                <Setter Property="Source" Value="{Binding Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
                             </Style>
                         </Image.Style>
                     </Image>

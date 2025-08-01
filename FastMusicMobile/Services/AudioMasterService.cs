@@ -58,7 +58,7 @@ namespace FastMusicMobile.Services
                     ID = song.AlbumId,
                     Name = song.AlbumName,
                     Artist = song.Artist, 
-                    Thumbnail = song.Thumbnail
+                    Thumbnail = await _audioService.GetThumbnail(song.Id)
                 });
                 
                 song.Album = _albums.Last();
@@ -67,6 +67,10 @@ namespace FastMusicMobile.Services
             foreach (Album album in _albums)
             {
                 album.Songs = _songs.Where(x => x.AlbumId.Equals(album.ID)).ToList();
+                foreach (Song song in album.Songs)
+                {
+                    song.Thumbnail = album.Thumbnail;
+                }
             }
 
             _albums = _albums.OrderBy(x => x.Name).ToList();

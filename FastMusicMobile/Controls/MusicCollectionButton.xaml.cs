@@ -18,10 +18,10 @@ public partial class MusicCollectionButton : ContentView
 		set => SetValue(IconProperty, value);
 	}
 
-	public static readonly BindableProperty ThumbnailProperty = BindableProperty.Create(nameof(Thumbnail), typeof(Byte[]), typeof(MusicCollectionButton), null);
-	public Byte[] Thumbnail
+	public static readonly BindableProperty ThumbnailProperty = BindableProperty.Create(nameof(Thumbnail), typeof(byte[]), typeof(MusicCollectionButton), null);
+	public byte[] Thumbnail
 	{
-		get => (Byte[])GetValue(ThumbnailProperty);
+		get => (byte[])GetValue(ThumbnailProperty);
 		set => SetValue(ThumbnailProperty, value);
 	}
 

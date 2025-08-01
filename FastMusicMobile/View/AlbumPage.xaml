@@ -10,19 +10,19 @@
     <Grid RowDefinitions="*, 70"
           RowSpacing="0"
           BackgroundColor="{StaticResource Secondary}">
-        <CollectionView ItemsSource="{Binding Album.Songs}">
+        <CollectionView ItemsSource="{Binding Album.Songs, Mode=OneWay}" ItemSizingStrategy="MeasureFirstItem">
             <CollectionView.Header>
                 <VerticalStackLayout>
                     <Border Background="{StaticResource Gradient}" Margin="0,20,0,10" HeightRequest="180" WidthRequest="180" StrokeShape="RoundRectangle 12" HorizontalOptions="Center">
                         <Grid>
                             <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="86" HorizontalOptions="Center" VerticalOptions="Center" />
-                            <Image Source="{Binding Album.Thumbnail, Converter={StaticResource StreamConverter}}" Aspect="AspectFill" />
+                            <Image Source="{Binding Album.Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}, Mode=OneTime}" Aspect="AspectFill" />
                         </Grid>
                     </Border>
                     <Label Text="{Binding Album.Name}" FontSize="24" FontAttributes="Bold" Margin="20,0,20,0" />
                     <Label Text="{Binding Album.Artist}" FontSize="14" Margin="20,0,20,0" />
                     <FlexLayout Direction="Row" JustifyContent="End" AlignContent="Center" HeightRequest="60" Padding="20, 0, 10, 10" Wrap="NoWrap" IsClippedToBounds="False">
-                        <Label Text="{Binding Album.Songs.Count, StringFormat='{0} Songs'}" FontSize="17" FontAttributes="Bold" VerticalTextAlignment="Center" FlexLayout.Grow="1" />
+                        <Label Text="{Binding Album.Songs.Count, StringFormat='{0} Songs', Mode=OneTime}" FontSize="17" FontAttributes="Bold" VerticalTextAlignment="Center" FlexLayout.Grow="1" />
                         <controls:IconButtonSmall Icon="&#xf04b;" WidthRequest="50" />
                     </FlexLayout>
                 </VerticalStackLayout>
@@ -33,7 +33,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Song}">
-                    <controls:SongButton Title="{Binding Name}" Artist="{Binding Artist}" Thumbnail="{Binding Thumbnail}" Padding="10,0,10,10" />
+                    <controls:SongButton Title="{Binding Name, Mode=OneTime}" Artist="{Binding Artist, Mode=OneTime}" Thumbnail="{Binding Thumbnail, Mode=OneTime}" Padding="10,0,10,10" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

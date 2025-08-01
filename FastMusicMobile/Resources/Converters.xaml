@@ -4,6 +4,7 @@
                     xmlns:converters="clr-namespace:FastMusicMobile.Converters"
              x:Class="FastMusicMobile.Resources.Converters">
 
-    <converters:MemoryStreamToImageSourceConverter x:Key="StreamConverter" />
+    <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+    <converters:MemoryStreamToImageSourceConverter x:Key="MemoryStreamToImageSourceConverter" />
 
 </ResourceDictionary>

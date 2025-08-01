@@ -19,7 +19,7 @@
                     <Label Text="Home" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
                 </HorizontalStackLayout>
                 <controls:IconButton Title="Albums" Icon="&#xf51f;" Command="{Binding NavigateCommand}" CommandParameter="albums" Margin="10,0,10,0" />
-                <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureAllItems">
+                <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureFirstItem">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal"
                                            ItemSpacing="0" />
@@ -52,7 +52,7 @@
                 <!--<VerticalStackLayout Spacing="10">
                     <controls:SongButton Title="In Amber Clad" Artist="Martin O'Donnell, Michael Salvatori" />
                 </VerticalStackLayout>-->
-                <CollectionView ItemsSource="{Binding Songs}" ItemSizingStrategy="MeasureAllItems">
+                <CollectionView ItemsSource="{Binding Songs}" ItemSizingStrategy="MeasureFirstItem">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical"
                                            ItemSpacing="0" />

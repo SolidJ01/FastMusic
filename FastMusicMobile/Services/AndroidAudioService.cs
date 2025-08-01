@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Java.Util.Jar.Attributes;
+using Size = Android.Util.Size;
 
 namespace FastMusicMobile.Services
 {
@@ -103,7 +104,7 @@ namespace FastMusicMobile.Services
                 long albumId = cursor.GetLong(albumIdColumn);
                 Android.Net.Uri uri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, id);
                 Android.Net.Uri albumUri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, albumId);
-                MemoryStream thumbnail = null;
+                /*MemoryStream thumbnail = null;
 
                 try
                 {
@@ -115,7 +116,7 @@ namespace FastMusicMobile.Services
                 catch (Exception e)
                 {
 
-                }
+                }*/
 
                 songs.Add(new Song
                 {
@@ -125,14 +126,34 @@ namespace FastMusicMobile.Services
                     URI = uri.ToString(),
                     AlbumName = album,
                     AlbumId = albumId,
-                    Thumbnail = thumbnail?.ToArray()
+                    //Thumbnail = thumbnail?.ToArray()
                 });
+                //thumbnail?.Dispose();
 
                 System.Diagnostics.Debug.WriteLine($"Indexed song {name}");
             }
             cursor.Close();
 
             return songs;
+        }
+
+        public async Task<byte[]> GetThumbnail(long id)
+        {
+            Android.Net.Uri uri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, id);
+
+            try
+            {
+                var bitmap = Platform.CurrentActivity.ApplicationContext.ContentResolver.LoadThumbnail(uri, new Size(300, 300), null);
+                MemoryStream ms = new MemoryStream();
+                bitmap.Compress(Bitmap.CompressFormat.Png, 100, ms);
+                
+                return ms.ToArray();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
 
     }

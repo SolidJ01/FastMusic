@@ -11,7 +11,7 @@
       RowSpacing="0"
       BackgroundColor="{StaticResource Secondary}"
       IsClippedToBounds="False">
-        <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureAllItems">
+        <CollectionView ItemsSource="{Binding Albums, Mode=OneWay}" ItemSizingStrategy="MeasureFirstItem">
             <CollectionView.Header>
                 <Grid HeightRequest="65" ColumnDefinitions="*, 65" Margin="0, 0, 0, 10">
                     <HorizontalStackLayout Margin="10,10,10,5">
@@ -22,7 +22,7 @@
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Album}">
-                    <controls:AlbumButton Title="{Binding Name}" Artist="{Binding Artist}" Thumbnail="{Binding Thumbnail}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumsPageViewModel}}, Path=GoToAlbumCommand}" CommandParameter="{Binding .}" Padding="10,0,10,10" IsClippedToBounds="False" />
+                    <controls:AlbumButton Title="{Binding Name, Mode=OneTime}" Artist="{Binding Artist, Mode=OneTime}" Thumbnail="{Binding Thumbnail, Mode=OneTime}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumsPageViewModel}}, Path=GoToAlbumCommand, Mode=OneTime}" CommandParameter="{Binding ., Mode=OneTime}" Padding="10,0,10,10" IsClippedToBounds="False" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
