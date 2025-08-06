@@ -33,7 +33,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Song}">
-                    <controls:SongButton Title="{Binding Name, Mode=OneTime}" Artist="{Binding Artist, Mode=OneTime}" Thumbnail="{Binding Thumbnail, Mode=OneTime}" Padding="10,0,10,10" />
+                    <controls:SongButton Song="{Binding ., Mode=OneWay}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumPageViewModel}}, Path=PlaySongCommand}" Padding="10,0,10,10" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -45,8 +45,16 @@
               Padding="10,10,10,10"
               IsClippedToBounds="False">
             <controls:IconButtonSmall Icon="&#xf0c9;" />
-
-            <controls:IconButtonSmall Icon="&#xf04b;" Grid.Column="2" />
+            <controls:SongButton Song="{Binding CurrentlyPlaying}" Grid.Column="1" />
+            <controls:IconButtonSmall Icon="&#xf04b;" Command="{Binding PlayPauseCommand}" Grid.Column="2">
+                <controls:IconButtonSmall.Triggers>
+                    <DataTrigger TargetType="controls:IconButtonSmall"
+                                 Binding="{Binding IsPlaying, Mode=OneWay}"
+                                 Value="True">
+                        <Setter Property="controls:IconButtonSmall.Icon" Value="&#xf04c;" />
+                    </DataTrigger>
+                </controls:IconButtonSmall.Triggers>
+            </controls:IconButtonSmall>
         </Grid>
     </Grid>
 </ContentPage>

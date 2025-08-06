@@ -6,6 +6,9 @@
              x:Class="FastMusicMobile.Controls.SongButton"
              x:DataType="controls:SongButton">
     <Border BindingContext="{x:Reference this}" StrokeThickness="0" HeightRequest="50">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding Song}" NumberOfTapsRequired="1" />
+        </Border.GestureRecognizers>
         <Grid ColumnDefinitions="50, *" 
               HeightRequest="50"
               ColumnSpacing="10">
@@ -18,7 +21,7 @@
                     <Image Aspect="AspectFill">
                         <Image.Style>
                             <Style TargetType="Image">
-                                <Setter Property="Source" Value="{Binding Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+                                <Setter Property="Source" Value="{Binding Song.Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
                             </Style>
                         </Image.Style>
                     </Image>
@@ -28,8 +31,8 @@
                         Direction="Column"
                         JustifyContent="Center"
                         Padding="0, 0, 10, 0">
-                <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation" />
-                <Label Text="{Binding Artist}" FontSize="10" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" Margin="0, -2, 0, 0" />
+                <Label Text="{Binding Song.Name}" FontSize="16" FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation" />
+                <Label Text="{Binding Song.Artist}" FontSize="10" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" Margin="0, -2, 0, 0" />
             </FlexLayout>
         </Grid>
     </Border>

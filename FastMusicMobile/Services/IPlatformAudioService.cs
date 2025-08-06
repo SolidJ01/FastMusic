@@ -11,5 +11,9 @@ namespace FastMusicMobile.Services
     {
         public Task<List<Song>> GetSongs();
         public Task<byte[]> GetThumbnail(long id);
+        public void Play();
+        public void Pause();
+        public void PlaySong(Song song);
+        public bool IsPlaying { get; }
     }
 }

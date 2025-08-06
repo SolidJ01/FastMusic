@@ -10,10 +10,8 @@ using System.Windows.Input;
 
 namespace FastMusicMobile.ViewModel
 {
-    public class MainPageViewModel : BaseViewModel
+    public class MainPageViewModel : ControlBarPageViewModel
     {
-        private AudioMasterService _audioService;
-
         private ObservableCollection<Song> _songs;
         public ObservableCollection<Song> Songs
         {
@@ -40,9 +38,8 @@ namespace FastMusicMobile.ViewModel
 
         public ICommand GoToAlbumCommand { private set; get; }
 
-        public MainPageViewModel(AudioMasterService audioService)
+        public MainPageViewModel(AudioMasterService audioService) : base(audioService)
         {
-            _audioService = audioService;
             Songs = new ObservableCollection<Song>();
 
             NavigateCommand = new Command<string>(execute: (string arg) => Navigate(arg, new ShellNavigationQueryParameters()));
@@ -54,11 +51,11 @@ namespace FastMusicMobile.ViewModel
 
         public async Task Initialize()
         {
-            if (_audioService.Songs.Count > 0)
+            if (_audioMasterService.Songs.Count > 0)
                 return;
 
-            _audioService.MusicRetrieved += OnMusicRetrieved;
-            await _audioService.RetrieveMusic();
+            _audioMasterService.MusicRetrieved += OnMusicRetrieved;
+            await _audioMasterService.RetrieveMusic();
         }
 
         private async void Navigate(string page, ShellNavigationQueryParameters param)
@@ -69,8 +66,8 @@ namespace FastMusicMobile.ViewModel
         private void OnMusicRetrieved(object? sender, EventArgs e)
         {
             Songs.Clear();
-            Songs = new ObservableCollection<Song>(_audioService.Songs.GetRange(0, 10));
-            Albums = new ObservableCollection<Album>(_audioService.Albums.GetRange(0, 10));
+            Songs = new ObservableCollection<Song>(_audioMasterService.Songs.GetRange(0, 10));
+            Albums = new ObservableCollection<Album>(_audioMasterService.Albums.GetRange(0, 10));
         }
     }
 }

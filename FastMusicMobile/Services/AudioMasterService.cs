@@ -11,6 +11,8 @@ namespace FastMusicMobile.Services
     public class AudioMasterService
     {
         public event EventHandler MusicRetrieved;
+        public event EventHandler CurrentlyPlayingChanged;
+        public event EventHandler PlayingStateChanged;
 
         private readonly IPlatformAudioService _audioService;
 
@@ -22,6 +24,10 @@ namespace FastMusicMobile.Services
 
         private List<Playlist> _playlists = new();
         public List<Playlist> Playlists { get { return _playlists; } }
+
+        private Song? _currentlyPlaying;
+        public Song? CurrentlyPlaying { get { return _currentlyPlaying; } }
+        public bool IsPlaying => _audioService.IsPlaying;
 
         public AudioMasterService()
         {
@@ -79,6 +85,24 @@ namespace FastMusicMobile.Services
         private async Task GetPlaylists()
         {
 
+        }
+
+        public void PlayPause()
+        {
+            if (_audioService.IsPlaying)
+                _audioService.Pause();
+            else
+                _audioService.Play();
+            
+            PlayingStateChanged?.Invoke(this, new EventArgs());
+        }
+
+        public void PlaySong(Song song)
+        {
+            _audioService.PlaySong(song);
+            _currentlyPlaying = song;
+            PlayingStateChanged?.Invoke(this, new EventArgs());
+            CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
         }
     }
 }

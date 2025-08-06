@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:viewModel="clr-namespace:FastMusicMobile.ViewModel"
+                    xmlns:controls="clr-namespace:FastMusicMobile.Controls">
+    
+    <ControlTemplate x:Key="ControlBarPage">
+        <Grid BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
+              RowDefinitions="*, 70"
+              RowSpacing="0"
+              BackgroundColor="{StaticResource Secondary}">
+            <ContentPresenter Grid.Row="0" />
+            
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="50, *, 50"
+                  ColumnSpacing="10"
+                  Padding="10">
+                <controls:IconButtonSmall Icon="&#xf0c9;" />
+                <controls:SongButton Song="{Binding CurrentlyPlaying}"
+                                     Grid.Column="1" />
+                <controls:IconButtonSmall Icon="&#xf04b;" 
+                                          Command="{Binding PlayPauseCommand}"
+                                          Grid.Column="2">
+                    <controls:IconButtonSmall.Triggers>
+                        <DataTrigger TargetType="controls:IconButtonSmall"
+                                     Binding="{Binding IsPlaying, Mode=OneWay}"
+                                     Value="True">
+                            <Setter Property="controls:IconButtonSmall.Icon" Value="&#xf04c;" />
+                        </DataTrigger>
+                    </controls:IconButtonSmall.Triggers>
+                </controls:IconButtonSmall>
+            </Grid>
+        </Grid>
+    </ControlTemplate>
+    
+</ResourceDictionary>

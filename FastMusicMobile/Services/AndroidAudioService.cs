@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Android.Media;
 using static Java.Util.Jar.Attributes;
 using Size = Android.Util.Size;
 
@@ -28,14 +29,16 @@ namespace FastMusicMobile.Services
 {
     public class AndroidAudioService : IPlatformAudioService
     {
-
-        //private readonly MediaStore _mediaStore;
+        private MediaPlayer _mediaPlayer;
+        
+        public bool IsPlaying => _mediaPlayer.IsPlaying;
 
         public AndroidAudioService()
         {
-            //_mediaStore = mediaStore;
+            _mediaPlayer = new MediaPlayer();
+            _mediaPlayer.SetAudioAttributes(new AudioAttributes.Builder().SetContentType(AudioContentType.Music).SetUsage(AudioUsageKind.Media).Build());
         }
-
+        
         public async Task<List<Song>> GetSongs()
         {
             PermissionStatus permission = await Permissions.CheckStatusAsync<ReadMediaAudio>();
@@ -44,13 +47,6 @@ namespace FastMusicMobile.Services
             {
                 permission = await Permissions.RequestAsync<ReadMediaAudio>();
             }
-
-            //  THIS IS THE ONE THAT WORKS
-            //if (ContextCompat.CheckSelfPermission(Platform.CurrentActivity, Manifest.Permission.ReadMediaAudio) != Permission.Granted)
-            //{
-            //    ActivityCompat.RequestPermissions(Platform.CurrentActivity, new string[] { Manifest.Permission.ReadMediaAudio }, 0);
-            //    //AndroidX.Activity.Result.Contract.ActivityResultContracts.RequestPermission() // (NOT THIS ONE)
-            //}
 
             List<Song> songs = new List<Song>();
 
@@ -66,7 +62,8 @@ namespace FastMusicMobile.Services
                 MediaStore.Audio.Media.InterfaceConsts.Artist,
                 MediaStore.Audio.Media.InterfaceConsts.Album,
                 MediaStore.Audio.Media.InterfaceConsts.AlbumId, 
-                MediaStore.Audio.Media.InterfaceConsts.IsMusic
+                MediaStore.Audio.Media.InterfaceConsts.IsMusic, 
+                MediaStore.Audio.Media.InterfaceConsts.Data
             };
             string selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + " == ?";
             string[] selectionArgs = new string[] {
@@ -74,26 +71,22 @@ namespace FastMusicMobile.Services
             };
             string sortOrder = MediaStore.Audio.Media.InterfaceConsts.Title + " ASC";
 
-            //MediaStore.Files.GetContentUri(MediaStore.VolumeExternal);
-            var cursor = activity.ApplicationContext.ContentResolver.Query( //Android.App.Application.Context.ContentResolver
+            var cursor = activity.ApplicationContext.ContentResolver.Query( 
                 Build.VERSION.SdkInt >= BuildVersionCodes.Q 
                     ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal)
                     : MediaStore.Audio.Media.ExternalContentUri, 
-                //MediaStore.Audio.Media.ExternalContentUri,
                 projection, 
                 null, 
                 null, 
                 sortOrder
             );
 
-            
-
             int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Id);
             int nameColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Title);
             int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
             int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Album);
             int albumIdColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.AlbumId);
-
+            int dataColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Data);
             
             while (cursor.MoveToNext())
             {
@@ -102,21 +95,9 @@ namespace FastMusicMobile.Services
                 string artist = cursor.GetString(artistColumn);
                 string album = cursor.GetString(albumColumn);
                 long albumId = cursor.GetLong(albumIdColumn);
+                string path = cursor.GetString(dataColumn);
                 Android.Net.Uri uri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, id);
                 Android.Net.Uri albumUri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, albumId);
-                /*MemoryStream thumbnail = null;
-
-                try
-                {
-                    var bitmap = activity.ApplicationContext.ContentResolver.LoadThumbnail(uri, new Android.Util.Size(300, 300), null);
-                    thumbnail = new MemoryStream();
-                    bitmap.Compress(Bitmap.CompressFormat.Png, 100, thumbnail);
-                    bitmap.Recycle();
-                }
-                catch (Exception e)
-                {
-
-                }*/
 
                 songs.Add(new Song
                 {
@@ -125,10 +106,9 @@ namespace FastMusicMobile.Services
                     Artist = artist,
                     URI = uri.ToString(),
                     AlbumName = album,
-                    AlbumId = albumId,
-                    //Thumbnail = thumbnail?.ToArray()
+                    AlbumId = albumId, 
+                    Path = path
                 });
-                //thumbnail?.Dispose();
 
                 System.Diagnostics.Debug.WriteLine($"Indexed song {name}");
             }
@@ -156,6 +136,45 @@ namespace FastMusicMobile.Services
             }
         }
 
+        public void Play()
+        {
+            try
+            {
+                _mediaPlayer.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public void Pause()
+        {
+            if (!_mediaPlayer.IsPlaying)
+                return;
+            
+            _mediaPlayer.Pause();
+        }
+
+        public void PlaySong(Song song)
+        {
+            _mediaPlayer.Reset();
+            try
+            {
+                _mediaPlayer.SetDataSource(
+                    Platform.CurrentActivity.ApplicationContext,
+                    ContentUris.WithAppendedId(
+                        Build.VERSION.SdkInt >= BuildVersionCodes.Q
+                            ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal)
+                            : MediaStore.Audio.Media.ExternalContentUri, song.Id));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            _mediaPlayer.Prepare();
+            _mediaPlayer.Start();
+        }
     }
 }
 
