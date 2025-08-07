@@ -2,7 +2,7 @@ using FastMusicMobile.ViewModel;
 
 namespace FastMusicMobile.View;
 
-public partial class AlbumPage : ContentPage
+public partial class AlbumPage : ControlBarPage
 {
 	private AlbumPageViewModel _viewmodel;
 

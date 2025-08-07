@@ -10,9 +10,8 @@ using System.Windows.Input;
 
 namespace FastMusicMobile.ViewModel
 {
-    public class AlbumsPageViewModel : BaseViewModel
+    public class AlbumsPageViewModel : ControlBarPageViewModel
     {
-        private AudioMasterService _audioService;
 
         private ObservableCollection<Album> _albums;
         public ObservableCollection<Album> Albums
@@ -29,16 +28,14 @@ namespace FastMusicMobile.ViewModel
 
         public ICommand GoToAlbumCommand { get; private set; }
 
-        public AlbumsPageViewModel(AudioMasterService audioService)
+        public AlbumsPageViewModel(AudioMasterService audioService) : base(audioService)
         {
-            _audioService = audioService;
-
             GoToAlbumCommand = new Command<Album>(GoToAlbum);
         }
 
         public async Task Initialize()
         {
-            Albums = new ObservableCollection<Album>(_audioService.Albums);
+            Albums = new ObservableCollection<Album>(_audioMasterService.Albums);
         }
 
         private async void GoToAlbum(Album album)

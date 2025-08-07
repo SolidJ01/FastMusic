@@ -29,6 +29,8 @@ namespace FastMusicMobile.Services
 {
     public class AndroidAudioService : IPlatformAudioService
     {
+        public event EventHandler Completed;
+        
         private MediaPlayer _mediaPlayer;
         
         public bool IsPlaying => _mediaPlayer.IsPlaying;
@@ -37,6 +39,8 @@ namespace FastMusicMobile.Services
         {
             _mediaPlayer = new MediaPlayer();
             _mediaPlayer.SetAudioAttributes(new AudioAttributes.Builder().SetContentType(AudioContentType.Music).SetUsage(AudioUsageKind.Media).Build());
+            
+            _mediaPlayer.Completion += (sender, args) => {Completed?.Invoke(this, EventArgs.Empty); }; 
         }
         
         public async Task<List<Song>> GetSongs()

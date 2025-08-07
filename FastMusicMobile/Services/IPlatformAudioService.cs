@@ -9,6 +9,7 @@ namespace FastMusicMobile.Services
 {
     public interface IPlatformAudioService
     {
+        public event EventHandler Completed;
         public Task<List<Song>> GetSongs();
         public Task<byte[]> GetThumbnail(long id);
         public void Play();

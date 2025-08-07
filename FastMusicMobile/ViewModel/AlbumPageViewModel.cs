@@ -9,10 +9,8 @@ using System.Windows.Input;
 
 namespace FastMusicMobile.ViewModel
 {
-    public class AlbumPageViewModel : BaseViewModel, IQueryAttributable
+    public class AlbumPageViewModel : ControlBarPageViewModel, IQueryAttributable
     {
-        private AudioMasterService _audioMasterService;
-
         private Album _album;
         public Album Album
         {
@@ -32,36 +30,13 @@ namespace FastMusicMobile.ViewModel
             }
         }
 
-        public Song CurrentlyPlaying => _audioMasterService.CurrentlyPlaying;
-        public bool IsPlaying => _audioMasterService.IsPlaying;
-        
-        public ICommand PlaySongCommand { get; private set; }
-        public ICommand PlayPauseCommand { get; private set; }
-
-        public AlbumPageViewModel(AudioMasterService audioMasterService)
+        public AlbumPageViewModel(AudioMasterService audioMasterService) :  base(audioMasterService)
         {
-            _audioMasterService = audioMasterService;
-            _audioMasterService.CurrentlyPlayingChanged += (sender, args) =>
-            {
-                TriggerPropertyChange(nameof(CurrentlyPlaying));
-            };
-            _audioMasterService.PlayingStateChanged += (sender, args) =>
-            {
-                TriggerPropertyChange(nameof(IsPlaying));
-            };
-            
-            PlaySongCommand = new Command<Song>(PlaySong);
-            PlayPauseCommand = new Command(_audioMasterService.PlayPause);
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> queryAttributes)
         {
             Album = queryAttributes["Album"] as Album;
-        }
-
-        private void PlaySong(Song song)
-        {
-            _audioMasterService.PlaySong(song);
         }
     }
 }

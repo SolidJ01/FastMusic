@@ -1,8 +1,9 @@
-﻿using FastMusicMobile.ViewModel;
+﻿using FastMusicMobile.View;
+using FastMusicMobile.ViewModel;
 
 namespace FastMusicMobile
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : ControlBarPage
     {
         MainPageViewModel _viewModel;
 

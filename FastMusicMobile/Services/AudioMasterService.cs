@@ -34,6 +34,8 @@ namespace FastMusicMobile.Services
 #if ANDROID
             _audioService = new AndroidAudioService();
 #endif
+            
+            _audioService.Completed += (sender, args) => PlayingStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task RetrieveMusic()

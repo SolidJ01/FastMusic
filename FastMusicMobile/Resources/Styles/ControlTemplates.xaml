@@ -1,10 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:view="clr-namespace:FastMusicMobile.View"
                     xmlns:viewModel="clr-namespace:FastMusicMobile.ViewModel"
                     xmlns:controls="clr-namespace:FastMusicMobile.Controls">
     
-    <ControlTemplate x:Key="ControlBarPage">
-        <Grid BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
+    <ControlTemplate x:Key="ControlBarPage"
+                     x:DataType="view:ControlBarPage">
+        <Grid BindingContext="{Binding Source={RelativeSource TemplatedParent}}"
               RowDefinitions="*, 70"
               RowSpacing="0"
               BackgroundColor="{StaticResource Secondary}">

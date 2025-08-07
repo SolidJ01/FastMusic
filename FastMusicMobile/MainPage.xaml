@@ -1,82 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<view:ControlBarPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:FastMusicMobile.Controls"
              xmlns:model="clr-namespace:FastMusicMobile.Model"
+             xmlns:view="clr-namespace:FastMusicMobile.View"
              xmlns:viewmodel="clr-namespace:FastMusicMobile.ViewModel"
              x:Class="FastMusicMobile.MainPage"
              x:DataType="viewmodel:MainPageViewModel"
-             ControlTemplate="{StaticResource ControlBarPage}">
-
-    <Grid RowDefinitions="*, 70"
-          RowSpacing="0"
-          BackgroundColor="{StaticResource Secondary}"
-          IsClippedToBounds="False">
-
-        <ScrollView Orientation="Vertical">
-            <VerticalStackLayout Spacing="10">
-                <HorizontalStackLayout HeightRequest="50" Margin="10,10,10,0">
-                    <Label Text="&#xf015;" FontFamily="FASolid" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,0,10,0" />
-                    <Label Text="Home" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+             CurrentlyPlaying="{Binding CurrentlyPlaying}"
+             PlayPauseCommand="{Binding PlayPauseCommand}"
+             IsPlaying="{Binding IsPlaying}">
+    <ScrollView Orientation="Vertical">
+        <VerticalStackLayout Spacing="10">
+            <HorizontalStackLayout HeightRequest="50" Margin="10,10,10,0">
+                <Label Text="&#xf015;" FontFamily="FASolid" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,0,10,0" />
+                <Label Text="Home" FontSize="24" FontAttributes="Bold" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+            </HorizontalStackLayout>
+            <controls:IconButton Title="Albums" Icon="&#xf51f;" Command="{Binding NavigateCommand}" CommandParameter="albums" Margin="10,0,10,0" />
+            <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureFirstItem">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="0" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Album}">
+                        <controls:MusicCollectionButton Name="{Binding Name}" Icon="&#xf51f;" Thumbnail="{Binding Thumbnail}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToAlbumCommand}" CommandParameter="{Binding .}" Padding="5,0,5,0" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Header>
+                    <Border WidthRequest="5" HeightRequest="5" BackgroundColor="{StaticResource Secondary}" />
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <Border WidthRequest="5" HeightRequest="5" BackgroundColor="{StaticResource Secondary}" />
+                </CollectionView.Footer>
+            </CollectionView>
+            <controls:IconButton Title="Playlists" Icon="&#xf03a;" Margin="10,0,10,0" />
+            <ScrollView Orientation="Horizontal"
+                        HorizontalScrollBarVisibility="Never"
+                        Margin="0,0,0,0">
+                <HorizontalStackLayout Spacing="0"
+                                       Margin="0,0,0,5"
+                                       Padding="5,0,5,0">
+                    <controls:MusicCollectionButton Name="Chill Vibes" Icon="&#xf03a;" Padding="5,0" />
+                    <controls:MusicCollectionButton Name="Neon Synthwave" Icon="&#xf03a;" Padding="5,0" />
+                    <controls:MusicCollectionButton Name="Lofi Study Beats" Icon="&#xf03a;" Padding="5,0" />
                 </HorizontalStackLayout>
-                <controls:IconButton Title="Albums" Icon="&#xf51f;" Command="{Binding NavigateCommand}" CommandParameter="albums" Margin="10,0,10,0" />
-                <CollectionView ItemsSource="{Binding Albums}" ItemSizingStrategy="MeasureFirstItem">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal"
-                                           ItemSpacing="0" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type model:Album}">
-                            <controls:MusicCollectionButton Name="{Binding Name}" Icon="&#xf51f;" Thumbnail="{Binding Thumbnail}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToAlbumCommand}" CommandParameter="{Binding .}" Padding="5,0,5,0" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.Header>
-                        <Border WidthRequest="5" HeightRequest="5" BackgroundColor="{StaticResource Secondary}" />
-                    </CollectionView.Header>
-                    <CollectionView.Footer>
-                        <Border WidthRequest="5" HeightRequest="5" BackgroundColor="{StaticResource Secondary}" />
-                    </CollectionView.Footer>
-                </CollectionView>
-                <controls:IconButton Title="Playlists" Icon="&#xf03a;" Margin="10,0,10,0" />
-                <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never"
-                            Margin="0,0,0,0">
-                    <HorizontalStackLayout Spacing="0"
-                                           Margin="0,0,0,5"
-                                           Padding="5,0,5,0">
-                        <controls:MusicCollectionButton Name="Chill Vibes" Icon="&#xf03a;" Padding="5,0" />
-                        <controls:MusicCollectionButton Name="Neon Synthwave" Icon="&#xf03a;" Padding="5,0" />
-                        <controls:MusicCollectionButton Name="Lofi Study Beats" Icon="&#xf03a;" Padding="5,0" />
-                    </HorizontalStackLayout>
-                </ScrollView>
-                <controls:IconButton Title="Songs" Icon="&#xf001;" Margin="10,0,10,0" />
-                <!--<VerticalStackLayout Spacing="10">
-                    <controls:SongButton Title="In Amber Clad" Artist="Martin O'Donnell, Michael Salvatori" />
-                </VerticalStackLayout>-->
-                <CollectionView ItemsSource="{Binding Songs}" ItemSizingStrategy="MeasureFirstItem">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical"
-                                           ItemSpacing="0" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type model:Song}">
-                            <controls:SongButton Song="{Binding ., Mode=OneTime}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=PlaySongCommand}" Padding="10,0,10,10" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
-
-
-        <Grid ColumnDefinitions="50, *, 50"
-              ColumnSpacing="10"
-              Grid.Row="1"
-              Margin="10,10,10,10"
-              IsClippedToBounds="False">
-            <controls:IconButtonSmall Icon="&#xf0c9;" />
-
-            <controls:IconButtonSmall Icon="&#xf04b;" Grid.Column="2" />
-        </Grid>
-    </Grid>
-
-</ContentPage>
+            </ScrollView>
+            <controls:IconButton Title="Songs" Icon="&#xf001;" Margin="10,0,10,0" />
+            <!--<VerticalStackLayout Spacing="10">
+                <controls:SongButton Title="In Amber Clad" Artist="Martin O'Donnell, Michael Salvatori" />
+            </VerticalStackLayout>-->
+            <CollectionView ItemsSource="{Binding Songs}" ItemSizingStrategy="MeasureFirstItem">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="0" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Song}">
+                        <controls:SongButton Song="{Binding ., Mode=OneTime}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=PlaySongCommand}" Padding="10,0,10,10" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</view:ControlBarPage>
