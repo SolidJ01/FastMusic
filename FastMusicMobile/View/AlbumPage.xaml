@@ -7,7 +7,10 @@
              xmlns:viewmodel="clr-namespace:FastMusicMobile.ViewModel"
              x:Class="FastMusicMobile.View.AlbumPage"
              Title="AlbumPage"
-             x:DataType="viewmodel:AlbumPageViewModel">
+             x:DataType="viewmodel:AlbumPageViewModel"
+             CurrentlyPlaying="{Binding CurrentlyPlaying}"
+             PlayPauseCommand="{Binding PlayPauseCommand}"
+             IsPlaying="{Binding IsPlaying}">
     <CollectionView ItemsSource="{Binding Album.Songs, Mode=OneWay}" ItemSizingStrategy="MeasureFirstItem">
         <CollectionView.Header>
             <VerticalStackLayout>
@@ -21,7 +24,7 @@
                 <Label Text="{Binding Album.Artist}" FontSize="14" Margin="20,0,20,0" />
                 <FlexLayout Direction="Row" JustifyContent="End" AlignContent="Center" HeightRequest="60" Padding="20, 0, 10, 10" Wrap="NoWrap" IsClippedToBounds="False">
                     <Label Text="{Binding Album.Songs.Count, StringFormat='{0} Songs', Mode=OneTime}" FontSize="17" FontAttributes="Bold" VerticalTextAlignment="Center" FlexLayout.Grow="1" />
-                    <controls:IconButtonSmall Icon="&#xf04b;" WidthRequest="50" />
+                    <controls:IconButtonSmall Icon="&#xf04b;" WidthRequest="50" Command="{Binding PlayFromBeginningCommand}" />
                 </FlexLayout>
             </VerticalStackLayout>
         </CollectionView.Header>
@@ -31,7 +34,7 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="{x:Type model:Song}">
-                <controls:SongButton Song="{Binding ., Mode=OneWay}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumPageViewModel}}, Path=PlaySongCommand}" Padding="10,0,10,10" />
+                <controls:SongButton Song="{Binding ., Mode=OneWay}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AlbumPageViewModel}}, Path=PlayFromSongCommand}" Padding="10,0,10,10" />
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

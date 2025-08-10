@@ -14,7 +14,7 @@ public partial class ControlBarPage : ContentPage
     public static BindableProperty PlayPauseCommandProperty = BindableProperty.Create(nameof(PlayPauseCommand), typeof(ICommand), typeof(ControlBarPage), null);
     public static BindableProperty IsPlayingProperty = BindableProperty.Create(nameof(IsPlaying), typeof(bool), typeof(ControlBarPage), false);
     
-    public Song CurrentlyPlaying
+    public Song? CurrentlyPlaying
     {
         get => (Song)GetValue(CurrentlyPlayingProperty);
         set => SetValue(CurrentlyPlayingProperty, value);

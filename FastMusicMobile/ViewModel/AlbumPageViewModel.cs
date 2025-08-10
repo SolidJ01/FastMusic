@@ -29,14 +29,29 @@ namespace FastMusicMobile.ViewModel
                 return "0:0";
             }
         }
+        
+        public ICommand PlayFromSongCommand { private set; get; }
+        public ICommand PlayFromBeginningCommand { private set; get; }
 
         public AlbumPageViewModel(AudioMasterService audioMasterService) :  base(audioMasterService)
         {
+            PlayFromSongCommand = new Command<Song>(PlayFromSong);
+            PlayFromBeginningCommand = new Command(PlayFromBeginning);
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> queryAttributes)
         {
             Album = queryAttributes["Album"] as Album;
+        }
+
+        private void PlayFromSong(Song song)
+        {
+            _audioMasterService.PlayCollection(_album.Songs, _album.Songs.IndexOf(song));
+        }
+
+        private void PlayFromBeginning()
+        {
+            _audioMasterService.PlayCollection(_album.Songs);
         }
     }
 }

@@ -17,8 +17,24 @@
                   ColumnSpacing="10"
                   Padding="10">
                 <controls:IconButtonSmall Icon="&#xf0c9;" />
-                <controls:SongButton Song="{Binding CurrentlyPlaying}"
-                                     Grid.Column="1" />
+                
+                <Label Grid.Column="1"
+                       Text="Nothing Playing"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="16"
+                       FontAttributes="Bold"/>
+                <controls:SongButton Song="{Binding CurrentlyPlaying, Mode=OneWay}"
+                                     Grid.Column="1">
+                    <controls:SongButton.Triggers>
+                        <DataTrigger TargetType="controls:SongButton"
+                                     Binding="{Binding CurrentlyPlaying, Mode=OneWay, TargetNullValue=''}"
+                                     Value="">
+                            <Setter Property="controls:SongButton.IsVisible" Value="False" />
+                        </DataTrigger>
+                    </controls:SongButton.Triggers>
+                </controls:SongButton>
+                
                 <controls:IconButtonSmall Icon="&#xf04b;" 
                                           Command="{Binding PlayPauseCommand}"
                                           Grid.Column="2">

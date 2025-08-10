@@ -25,8 +25,13 @@ namespace FastMusicMobile.Services
         private List<Playlist> _playlists = new();
         public List<Playlist> Playlists { get { return _playlists; } }
 
-        private Song? _currentlyPlaying;
-        public Song? CurrentlyPlaying { get { return _currentlyPlaying; } }
+        //private Song? _currentlyPlaying;
+        private List<Song>? _currentCollection = new();
+        private List<Song>? _currentCollectionPlayed = new();
+        public Song? CurrentlyPlaying
+        {
+            get { return _currentCollection.Count == 0 ? null : _currentCollection.First(); }
+        }
         public bool IsPlaying => _audioService.IsPlaying;
 
         public AudioMasterService()
@@ -35,7 +40,8 @@ namespace FastMusicMobile.Services
             _audioService = new AndroidAudioService();
 #endif
             
-            _audioService.Completed += (sender, args) => PlayingStateChanged?.Invoke(this, EventArgs.Empty);
+            //_audioService.Completed += (sender, args) => PlayingStateChanged?.Invoke(this, EventArgs.Empty);
+            _audioService.Completed += (sender, args) => NextInCollection();
         }
 
         public async Task RetrieveMusic()
@@ -102,9 +108,34 @@ namespace FastMusicMobile.Services
         public void PlaySong(Song song)
         {
             _audioService.PlaySong(song);
-            _currentlyPlaying = song;
+            //_currentlyPlaying = song;
             PlayingStateChanged?.Invoke(this, new EventArgs());
             CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
+        }
+
+        public void PlayCollection(List<Song> songs, int index = 0)
+        {
+            _currentCollection = songs.GetRange(index, songs.Count - index);
+            _currentCollection.AddRange(songs.GetRange(0, index));
+            _currentCollectionPlayed.Clear();
+            PlaySong(CurrentlyPlaying);
+        }
+
+        private void NextInCollection()
+        {
+            _currentCollectionPlayed.Add(CurrentlyPlaying);
+            _currentCollection.Remove(CurrentlyPlaying);
+            if (_currentCollection.Count > 0)
+            {
+                PlaySong(CurrentlyPlaying);
+            }
+            else
+            {
+                _currentCollection = _currentCollectionPlayed;
+                _currentCollectionPlayed.Clear();
+                PlayingStateChanged?.Invoke(this, new EventArgs());
+                CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
+            }
         }
     }
 }

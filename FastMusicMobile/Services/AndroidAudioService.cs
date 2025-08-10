@@ -67,13 +67,13 @@ namespace FastMusicMobile.Services
                 MediaStore.Audio.Media.InterfaceConsts.Album,
                 MediaStore.Audio.Media.InterfaceConsts.AlbumId, 
                 MediaStore.Audio.Media.InterfaceConsts.IsMusic, 
-                MediaStore.Audio.Media.InterfaceConsts.Data
+                MediaStore.Audio.Media.InterfaceConsts.Track
             };
             string selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + " == ?";
             string[] selectionArgs = new string[] {
                 true.ToString()
             };
-            string sortOrder = MediaStore.Audio.Media.InterfaceConsts.Title + " ASC";
+            string sortOrder = MediaStore.Audio.Media.InterfaceConsts.Track + " ASC";
 
             var cursor = activity.ApplicationContext.ContentResolver.Query( 
                 Build.VERSION.SdkInt >= BuildVersionCodes.Q 
@@ -90,7 +90,7 @@ namespace FastMusicMobile.Services
             int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
             int albumColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Album);
             int albumIdColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.AlbumId);
-            int dataColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Data);
+            int trackColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Track);
             
             while (cursor.MoveToNext())
             {
@@ -99,19 +99,16 @@ namespace FastMusicMobile.Services
                 string artist = cursor.GetString(artistColumn);
                 string album = cursor.GetString(albumColumn);
                 long albumId = cursor.GetLong(albumIdColumn);
-                string path = cursor.GetString(dataColumn);
-                Android.Net.Uri uri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, id);
-                Android.Net.Uri albumUri = ContentUris.WithAppendedId(Build.VERSION.SdkInt >= BuildVersionCodes.Q ? MediaStore.Audio.Media.GetContentUri(MediaStore.VolumeExternal) : MediaStore.Audio.Media.ExternalContentUri, albumId);
-
+                string track = cursor.GetString(trackColumn);
+                
                 songs.Add(new Song
                 {
                     Id = id,
                     Name = name,
                     Artist = artist,
-                    URI = uri.ToString(),
                     AlbumName = album,
                     AlbumId = albumId, 
-                    Path = path
+                    Track = track
                 });
 
                 System.Diagnostics.Debug.WriteLine($"Indexed song {name}");
