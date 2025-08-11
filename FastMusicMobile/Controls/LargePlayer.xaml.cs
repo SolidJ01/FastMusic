@@ -24,7 +24,7 @@ public partial class LargePlayer : ContentView
                 }
                 else
                 {
-                    Hide();
+                    AnimateHide();
                 }
             }
             
@@ -36,19 +36,22 @@ public partial class LargePlayer : ContentView
     
     public LargePlayer()
     {
+        HideCommand = new Command(Hide);
         InitializeComponent();
-        Grid.TranslationY = Grid.Height;
-
-        HideCommand = new Command(() => IsActive = false);
     }
 
     private void Hide()
     {
-        Grid.TranslateTo(0, Grid.Height, 250U);
+        IsActive = false;
     }
 
-    private void Show()
+    private async void AnimateHide()
     {
-        Grid.TranslateTo(0, 0, 250U);
+        await Grid.TranslateTo(0, Grid.Height, 250U);
+    }
+
+    private async void Show()
+    {
+        await Grid.TranslateTo(0, 0, 250U);
     }
 }

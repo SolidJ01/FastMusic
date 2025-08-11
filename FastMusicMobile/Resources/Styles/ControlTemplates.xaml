@@ -50,7 +50,7 @@
             </Grid>
             
             <controls:LargePlayer Grid.RowSpan="2"
-                                  IsActive="{Binding LargePlayerActive}">
+                                  IsActive="True">
                 
             </controls:LargePlayer>
         </Grid>

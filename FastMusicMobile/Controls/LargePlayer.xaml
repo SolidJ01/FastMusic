@@ -5,14 +5,13 @@
              xmlns:controls="clr-namespace:FastMusicMobile.Controls"
              x:Name="this"
              x:Class="FastMusicMobile.Controls.LargePlayer">
-    <AbsoluteLayout>
+    <Grid>
         <Grid x:Name="Grid"
               BindingContext="{x:Reference this}"
               RowDefinitions="*, 70"
-              BackgroundColor="Aqua"
-              TranslationY="500">
+              BackgroundColor="Aqua">
             
             <controls:IconButtonSmall Grid.Row="1" Margin="10" Icon="&#xf107;" Command="{Binding HideCommand}" />
         </Grid>
-    </AbsoluteLayout>
+    </Grid>
 </ContentView>
