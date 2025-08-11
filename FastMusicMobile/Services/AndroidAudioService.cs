@@ -159,6 +159,12 @@ namespace FastMusicMobile.Services
 
         public void PlaySong(Song song)
         {
+            SetActiveSong(song);
+            Play();
+        }
+
+        public void SetActiveSong(Song song)
+        {
             _mediaPlayer.Reset();
             try
             {
@@ -174,7 +180,6 @@ namespace FastMusicMobile.Services
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             _mediaPlayer.Prepare();
-            _mediaPlayer.Start();
         }
     }
 }

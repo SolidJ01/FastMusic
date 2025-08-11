@@ -132,7 +132,8 @@ namespace FastMusicMobile.Services
             else
             {
                 _currentCollection = _currentCollectionPlayed;
-                _currentCollectionPlayed.Clear();
+                _currentCollectionPlayed = new();
+                _audioService.SetActiveSong(CurrentlyPlaying);
                 PlayingStateChanged?.Invoke(this, new EventArgs());
                 CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
             }

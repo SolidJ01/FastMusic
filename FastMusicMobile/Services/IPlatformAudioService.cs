@@ -15,6 +15,7 @@ namespace FastMusicMobile.Services
         public void Play();
         public void Pause();
         public void PlaySong(Song song);
+        public void SetActiveSong(Song song);
         public bool IsPlaying { get; }
     }
 }

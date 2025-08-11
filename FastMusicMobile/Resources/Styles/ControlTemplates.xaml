@@ -25,6 +25,7 @@
                        FontSize="16"
                        FontAttributes="Bold"/>
                 <controls:SongButton Song="{Binding CurrentlyPlaying, Mode=OneWay}"
+                                     Command="{Binding ShowLargePlayerCommand}"
                                      Grid.Column="1">
                     <controls:SongButton.Triggers>
                         <DataTrigger TargetType="controls:SongButton"
@@ -47,6 +48,11 @@
                     </controls:IconButtonSmall.Triggers>
                 </controls:IconButtonSmall>
             </Grid>
+            
+            <controls:LargePlayer Grid.RowSpan="2"
+                                  IsActive="{Binding LargePlayerActive}">
+                
+            </controls:LargePlayer>
         </Grid>
     </ControlTemplate>
     
