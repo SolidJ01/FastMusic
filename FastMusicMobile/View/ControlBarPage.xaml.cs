@@ -14,6 +14,7 @@ public partial class ControlBarPage : ContentPage
     public static BindableProperty PlayPauseCommandProperty = BindableProperty.Create(nameof(PlayPauseCommand), typeof(ICommand), typeof(ControlBarPage), null);
     public static BindableProperty IsPlayingProperty = BindableProperty.Create(nameof(IsPlaying), typeof(bool), typeof(ControlBarPage), false);
     public static BindableProperty LargePlayerActiveProperty = BindableProperty.Create(nameof(LargePlayerActive), typeof(bool), typeof(ControlBarPage), false);
+    public static BindableProperty ShowLargePlayerCommandProperty = BindableProperty.Create(nameof(ShowLargePlayerCommand), typeof(ICommand), typeof(ControlBarPage), null);
     
     public Song? CurrentlyPlaying
     {
@@ -38,8 +39,12 @@ public partial class ControlBarPage : ContentPage
         get => (bool)GetValue(LargePlayerActiveProperty);
         set => SetValue(LargePlayerActiveProperty, value);
     }
-    
-    public ICommand ShowLargePlayerCommand { get; private set; }
+
+    public ICommand ShowLargePlayerCommand
+    {
+        get => (ICommand)GetValue(ShowLargePlayerCommandProperty);
+        set => SetValue(ShowLargePlayerCommandProperty, value);
+    }
     
     public ControlBarPage()
     {

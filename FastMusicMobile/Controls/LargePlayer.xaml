@@ -5,13 +5,28 @@
              xmlns:controls="clr-namespace:FastMusicMobile.Controls"
              x:Name="this"
              x:Class="FastMusicMobile.Controls.LargePlayer">
-    <Grid>
-        <Grid x:Name="Grid"
-              BindingContext="{x:Reference this}"
-              RowDefinitions="*, 70"
-              BackgroundColor="Aqua">
-            
-            <controls:IconButtonSmall Grid.Row="1" Margin="10" Icon="&#xf107;" Command="{Binding HideCommand}" />
-        </Grid>
+    <Grid x:Name="Grid"
+          BindingContext="{x:Reference this}"
+          RowDefinitions="*, 70"
+          BackgroundColor="{StaticResource Secondary}"
+          SizeChanged="Grid_OnSizeChanged">
+        <FlexLayout Direction="Column"
+                    JustifyContent="Center"
+                    AlignContent="Center"
+                    Padding="0, 70, 0, 0">
+            <Border Background="{StaticResource Gradient}"
+                    x:Name="BigBoy"
+                    StrokeShape="RoundRectangle 12">
+                <Grid>
+                    <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="170" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Image Source="{Binding CurrentlyPlaying.Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}, Mode=OneWay}" Aspect="AspectFill" />
+                </Grid>
+            </Border>
+            <Label Text="{Binding CurrentlyPlaying.Name}" FontAttributes="Bold" FontSize="20" Margin="10, 10, 10, 0" />
+            <Label Text="{Binding CurrentlyPlaying.Artist}" FontSize="12" Margin="10, 0" />
+        </FlexLayout>
+        
+        
+        <controls:IconButtonSmall Grid.Row="1" Margin="10" Icon="&#xf107;" Command="{Binding HideCommand}" />
     </Grid>
 </ContentView>

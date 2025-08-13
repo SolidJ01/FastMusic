@@ -11,20 +11,8 @@ public class ControlBarPageViewModel : BaseViewModel
     public Song? CurrentlyPlaying => _audioMasterService.CurrentlyPlaying;
     public bool IsPlaying => _audioMasterService.IsPlaying;
 
-    private bool _largePlayerActive = false;
-    public bool LargePlayerActive
-    {
-        get { return _largePlayerActive; }
-        set
-        {
-            _largePlayerActive = value;
-            TriggerPropertyChange(nameof(LargePlayerActive));
-        }
-    }
-
     public ICommand PlaySongCommand { get; private set; }
     public ICommand PlayPauseCommand { get; private set; }
-    public ICommand ShowLargePlayerCommand { get; private set; }
     
     public ControlBarPageViewModel(AudioMasterService audioMasterService)
     {
@@ -34,7 +22,6 @@ public class ControlBarPageViewModel : BaseViewModel
         
         PlaySongCommand = new Command<Song>(_audioMasterService.PlaySong);
         PlayPauseCommand = new Command(_audioMasterService.PlayPause);
-        ShowLargePlayerCommand = new Command(() => LargePlayerActive = true);
     }
 
     private void OnCurrentlyPlayingChanged(object? sender, EventArgs e)

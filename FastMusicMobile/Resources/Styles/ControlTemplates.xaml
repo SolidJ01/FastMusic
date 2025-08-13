@@ -50,7 +50,8 @@
             </Grid>
             
             <controls:LargePlayer Grid.RowSpan="2"
-                                  IsActive="True">
+                                  IsActive="{Binding LargePlayerActive, Mode=TwoWay}"
+                                  CurrentlyPlaying="{Binding CurrentlyPlaying}">
                 
             </controls:LargePlayer>
         </Grid>
