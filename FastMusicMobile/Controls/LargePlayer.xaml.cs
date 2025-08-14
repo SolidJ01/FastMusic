@@ -12,6 +12,8 @@ public partial class LargePlayer : ContentView
 {
     public static BindableProperty IsActiveProperty = BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(LargePlayer), false, propertyChanged:IsActiveChanged);
     public static BindableProperty CurrentlyPlayingProperty = BindableProperty.Create(nameof(CurrentlyPlaying), typeof(Song), typeof(LargePlayer), null);
+    public static BindableProperty IsPlayingProperty = BindableProperty.Create(nameof(IsPlaying), typeof(bool), typeof(LargePlayer), false);
+    public static BindableProperty PlayPauseCommandProperty = BindableProperty.Create(nameof(PlayPauseCommand), typeof(ICommand), typeof(LargePlayer), null);
     
     private static void IsActiveChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
@@ -38,6 +40,18 @@ public partial class LargePlayer : ContentView
     {
         get => (Song)GetValue(CurrentlyPlayingProperty);
         set => SetValue(CurrentlyPlayingProperty, value);
+    }
+
+    public bool IsPlaying
+    {
+        get => (bool)GetValue(IsPlayingProperty);
+        set => SetValue(IsPlayingProperty, value);
+    }
+
+    public ICommand PlayPauseCommand
+    {
+        get => (ICommand)GetValue(PlayPauseCommandProperty);
+        set => SetValue(PlayPauseCommandProperty, value);
     }
     
     public ICommand HideCommand { get; private set; }

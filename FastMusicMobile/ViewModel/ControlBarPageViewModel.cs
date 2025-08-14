@@ -20,8 +20,13 @@ public class ControlBarPageViewModel : BaseViewModel
         _audioMasterService.CurrentlyPlayingChanged += OnCurrentlyPlayingChanged;
         _audioMasterService.PlayingStateChanged += OnPlayingStateChanged;
         
-        PlaySongCommand = new Command<Song>(_audioMasterService.PlaySong);
+        PlaySongCommand = new Command<Song>(PlaySong);
         PlayPauseCommand = new Command(_audioMasterService.PlayPause);
+    }
+
+    private void PlaySong(Song song)
+    {
+        _audioMasterService.PlayCollection(new List<Song> { song });
     }
 
     private void OnCurrentlyPlayingChanged(object? sender, EventArgs e)
