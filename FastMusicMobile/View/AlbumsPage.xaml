@@ -10,6 +10,8 @@
              x:DataType="viewmodel:AlbumsPageViewModel"
              CurrentlyPlaying="{Binding CurrentlyPlaying}"
              PlayPauseCommand="{Binding PlayPauseCommand}"
+             NextCommand="{Binding NextCommand}"
+             PreviousCommand="{Binding PreviousCommand}"
              IsPlaying="{Binding IsPlaying}">
     <CollectionView ItemsSource="{Binding Albums, Mode=OneWay}" ItemSizingStrategy="MeasureFirstItem">
         <CollectionView.Header>

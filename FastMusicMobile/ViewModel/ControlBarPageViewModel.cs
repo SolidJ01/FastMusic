@@ -13,6 +13,8 @@ public class ControlBarPageViewModel : BaseViewModel
 
     public ICommand PlaySongCommand { get; private set; }
     public ICommand PlayPauseCommand { get; private set; }
+    public ICommand NextCommand { get; private set; }
+    public ICommand PreviousCommand { get; private set; }
     
     public ControlBarPageViewModel(AudioMasterService audioMasterService)
     {
@@ -22,6 +24,8 @@ public class ControlBarPageViewModel : BaseViewModel
         
         PlaySongCommand = new Command<Song>(PlaySong);
         PlayPauseCommand = new Command(_audioMasterService.PlayPause);
+        NextCommand = new Command(_audioMasterService.NextInCollection);
+        PreviousCommand = new Command(_audioMasterService.PreviousInCollection);
     }
 
     private void PlaySong(Song song)

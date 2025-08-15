@@ -53,7 +53,9 @@
                                   IsActive="{Binding LargePlayerActive, Mode=TwoWay}"
                                   CurrentlyPlaying="{Binding CurrentlyPlaying}"
                                   IsPlaying="{Binding IsPlaying}"
-                                  PlayPauseCommand="{Binding PlayPauseCommand}">
+                                  PlayPauseCommand="{Binding PlayPauseCommand}"
+                                  NextCommand="{Binding NextCommand}"
+                                  PreviousCommand="{Binding PreviousCommand}">
                 
             </controls:LargePlayer>
         </Grid>

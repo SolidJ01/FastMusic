@@ -121,7 +121,7 @@ namespace FastMusicMobile.Services
             PlaySong(CurrentlyPlaying);
         }
 
-        private void NextInCollection()
+        public void NextInCollection()
         {
             _currentCollectionPlayed.Add(CurrentlyPlaying);
             _currentCollection.Remove(CurrentlyPlaying);
@@ -136,6 +136,16 @@ namespace FastMusicMobile.Services
                 _audioService.SetActiveSong(CurrentlyPlaying);
                 PlayingStateChanged?.Invoke(this, new EventArgs());
                 CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
+            }
+        }
+
+        public void PreviousInCollection()
+        {
+            if (_currentCollectionPlayed.Count > 0)
+            {
+                _currentCollection.Insert(0, _currentCollectionPlayed.Last());
+                _currentCollectionPlayed.RemoveAt(_currentCollectionPlayed.Count - 1);
+                PlaySong(CurrentlyPlaying);
             }
         }
     }

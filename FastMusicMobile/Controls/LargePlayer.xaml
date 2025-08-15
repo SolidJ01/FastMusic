@@ -36,7 +36,8 @@
                     <controls:IconButtonSmall FlexLayout.Grow="6"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
                                               Margin="2.5, 0"
-                                              Icon="&#xf048;" />
+                                              Icon="&#xf048;" 
+                                              Command="{Binding PreviousCommand}" />
                     <controls:IconButtonSmall FlexLayout.Grow="7"
                                               x:Name="BigButton"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}"
@@ -54,7 +55,8 @@
                     <controls:IconButtonSmall FlexLayout.Grow="6"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
                                               Margin="2.5, 0"
-                                              Icon="&#xf051;" />
+                                              Icon="&#xf051;" 
+                                              Command="{Binding NextCommand}" />
                     <controls:IconButtonSmall FlexLayout.Grow="5" 
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}"
                                               Margin="2.5, 0, 0, 0"
