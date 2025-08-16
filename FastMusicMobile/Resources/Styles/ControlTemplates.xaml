@@ -34,6 +34,11 @@
                             <Setter Property="controls:SongButton.IsVisible" Value="False" />
                         </DataTrigger>
                     </controls:SongButton.Triggers>
+                    
+                    <controls:SongButton.GestureRecognizers>
+                        <SwipeGestureRecognizer Direction="Left" Command="{Binding NextCommand}" Threshold="50" />
+                        <SwipeGestureRecognizer Direction="Right" Command="{Binding PreviousCommand}" Threshold="50" />
+                    </controls:SongButton.GestureRecognizers>
                 </controls:SongButton>
                 
                 <controls:IconButtonSmall Icon="&#xf04b;" 

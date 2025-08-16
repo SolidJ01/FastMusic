@@ -37,12 +37,14 @@
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
                                               Margin="2.5, 0"
                                               Icon="&#xf048;" 
+                                              FontSize="28.8"
                                               Command="{Binding PreviousCommand}" />
                     <controls:IconButtonSmall FlexLayout.Grow="7"
                                               x:Name="BigButton"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}"
                                               Margin="2.5, 0"
                                               Icon="&#xf04b;"
+                                              FontSize="33.6"
                                               Command="{Binding PlayPauseCommand}">
                         <controls:IconButtonSmall.Triggers>
                             <DataTrigger TargetType="controls:IconButtonSmall"
@@ -56,6 +58,7 @@
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
                                               Margin="2.5, 0"
                                               Icon="&#xf051;" 
+                                              FontSize="28.8"
                                               Command="{Binding NextCommand}" />
                     <controls:IconButtonSmall FlexLayout.Grow="5" 
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}"

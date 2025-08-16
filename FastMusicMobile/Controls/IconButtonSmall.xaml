@@ -8,6 +8,6 @@
             <TapGestureRecognizer Command="{Binding Command}" />
         </Border.GestureRecognizers>
 
-        <Label Text="{Binding Icon}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FASolid" />
+        <Label Text="{Binding Icon}" FontSize="{Binding FontSize}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FASolid" />
     </Border>
 </ContentView>
