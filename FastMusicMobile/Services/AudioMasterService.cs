@@ -14,32 +14,56 @@ namespace FastMusicMobile.Services
         public event EventHandler CurrentlyPlayingChanged;
         public event EventHandler PlayingStateChanged;
 
+        public enum PlaybackMode
+        {
+            SingleCollection, 
+            RepeatCollection, 
+            RepeatSingle, 
+            SingleSingle
+        }
+
         private readonly IPlatformAudioService _audioService;
 
         private List<Song> _songs = new();
-        public List<Song> Songs { get { return _songs; } }
+
+        public List<Song> Songs
+        {
+            get { return _songs; }
+        }
 
         private List<Album> _albums = new();
-        public List<Album> Albums { get { return _albums; } }
+
+        public List<Album> Albums
+        {
+            get { return _albums; }
+        }
 
         private List<Playlist> _playlists = new();
-        public List<Playlist> Playlists { get { return _playlists; } }
+
+        public List<Playlist> Playlists
+        {
+            get { return _playlists; }
+        }
 
         //private Song? _currentlyPlaying;
         private List<Song>? _currentCollection = new();
         private List<Song>? _currentCollectionPlayed = new();
+
         public Song? CurrentlyPlaying
         {
             get { return _currentCollection.Count == 0 ? null : _currentCollection.First(); }
         }
+
         public bool IsPlaying => _audioService.IsPlaying;
+
+        private PlaybackMode _playbackMode = PlaybackMode.SingleCollection;
 
         public AudioMasterService()
         {
 #if ANDROID
             _audioService = new AndroidAudioService();
 #endif
-            
+
             //_audioService.Completed += (sender, args) => PlayingStateChanged?.Invoke(this, EventArgs.Empty);
             _audioService.Completed += (sender, args) => NextInCollection();
         }
@@ -71,10 +95,10 @@ namespace FastMusicMobile.Services
                 {
                     ID = song.AlbumId,
                     Name = song.AlbumName,
-                    Artist = song.Artist, 
+                    Artist = song.Artist,
                     Thumbnail = await _audioService.GetThumbnail(song.Id)
                 });
-                
+
                 song.Album = _albums.Last();
             }
 
@@ -92,7 +116,6 @@ namespace FastMusicMobile.Services
 
         private async Task GetPlaylists()
         {
-
         }
 
         public void PlayPause()
@@ -101,7 +124,7 @@ namespace FastMusicMobile.Services
                 _audioService.Pause();
             else
                 _audioService.Play();
-            
+
             PlayingStateChanged?.Invoke(this, new EventArgs());
         }
 
@@ -133,7 +156,23 @@ namespace FastMusicMobile.Services
             {
                 _currentCollection = _currentCollectionPlayed;
                 _currentCollectionPlayed = new();
-                _audioService.SetActiveSong(CurrentlyPlaying);
+
+                switch (_playbackMode)
+                {
+                    case PlaybackMode.SingleCollection:
+                        _audioService.SetActiveSong(CurrentlyPlaying);
+                        break;
+                    case PlaybackMode.RepeatCollection:
+                        PlaySong(CurrentlyPlaying);
+                        break;
+                    case PlaybackMode.RepeatSingle:
+
+                        break;
+                    case PlaybackMode.SingleSingle:
+
+                        break;
+                }
+
                 PlayingStateChanged?.Invoke(this, new EventArgs());
                 CurrentlyPlayingChanged?.Invoke(this, new EventArgs());
             }
@@ -147,6 +186,28 @@ namespace FastMusicMobile.Services
                 _currentCollectionPlayed.RemoveAt(_currentCollectionPlayed.Count - 1);
                 PlaySong(CurrentlyPlaying);
             }
+        }
+
+        public void ShuffleCollection()
+        {
+            if (_currentCollectionPlayed.Count > 0)
+            {
+                _currentCollection.AddRange(_currentCollectionPlayed);
+                _currentCollectionPlayed.Clear();
+            }
+
+            List<Song> shuffledCollection = [CurrentlyPlaying];
+            _currentCollection.Remove(CurrentlyPlaying);
+            Random random = new Random();
+
+            while (_currentCollection.Count > 0)
+            {
+                int index = random.Next(_currentCollection.Count - 1);
+                shuffledCollection.Add(_currentCollection[index]);
+                _currentCollection.RemoveAt(index);
+            }
+            
+            _currentCollection =  shuffledCollection;
         }
     }
 }

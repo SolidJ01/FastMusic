@@ -11,6 +11,7 @@
              PlayPauseCommand="{Binding PlayPauseCommand}"
              NextCommand="{Binding NextCommand}"
              PreviousCommand="{Binding PreviousCommand}"
+             ShuffleCommand="{Binding ShuffleCommand}"
              IsPlaying="{Binding IsPlaying}">
     <ScrollView Orientation="Vertical">
         <VerticalStackLayout Spacing="10">

@@ -15,6 +15,7 @@ public class ControlBarPageViewModel : BaseViewModel
     public ICommand PlayPauseCommand { get; private set; }
     public ICommand NextCommand { get; private set; }
     public ICommand PreviousCommand { get; private set; }
+    public ICommand ShuffleCommand { get; private set; }
     
     public ControlBarPageViewModel(AudioMasterService audioMasterService)
     {
@@ -26,6 +27,7 @@ public class ControlBarPageViewModel : BaseViewModel
         PlayPauseCommand = new Command(_audioMasterService.PlayPause);
         NextCommand = new Command(_audioMasterService.NextInCollection);
         PreviousCommand = new Command(_audioMasterService.PreviousInCollection);
+        ShuffleCommand = new Command(_audioMasterService.ShuffleCollection);
     }
 
     private void PlaySong(Song song)

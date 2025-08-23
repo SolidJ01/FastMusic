@@ -14,6 +14,7 @@ public partial class ControlBarPage : ContentPage
     public static BindableProperty PlayPauseCommandProperty = BindableProperty.Create(nameof(PlayPauseCommand), typeof(ICommand), typeof(ControlBarPage), null);
     public static BindableProperty NextCommandProperty = BindableProperty.Create(nameof(NextCommand), typeof(ICommand), typeof(ControlBarPage));
     public static BindableProperty PreviousCommandProperty = BindableProperty.Create(nameof(PreviousCommand), typeof(ICommand), typeof(ControlBarPage));
+    public static BindableProperty ShuffleCommandProperty = BindableProperty.Create(nameof(ShuffleCommand), typeof(ICommand), typeof(ControlBarPage));
     public static BindableProperty IsPlayingProperty = BindableProperty.Create(nameof(IsPlaying), typeof(bool), typeof(ControlBarPage), false);
     public static BindableProperty LargePlayerActiveProperty = BindableProperty.Create(nameof(LargePlayerActive), typeof(bool), typeof(ControlBarPage), false);
     public static BindableProperty ShowLargePlayerCommandProperty = BindableProperty.Create(nameof(ShowLargePlayerCommand), typeof(ICommand), typeof(ControlBarPage), null);
@@ -41,6 +42,12 @@ public partial class ControlBarPage : ContentPage
     {
         get => (ICommand)GetValue(PreviousCommandProperty);
         set => SetValue(PreviousCommandProperty, value);
+    }
+
+    public ICommand ShuffleCommand
+    {
+        get => (ICommand)GetValue(ShuffleCommandProperty);
+        set => SetValue(ShuffleCommandProperty, value);
     }
 
     public bool IsPlaying

@@ -32,7 +32,8 @@
                     <controls:IconButtonSmall FlexLayout.Grow="5"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}"
                                               Margin="0, 0, 2.5, 0"
-                                              Icon="&#xf074;"/>
+                                              Icon="&#xf074;"
+                                              Command="{Binding ShuffleCommand}" />
                     <controls:IconButtonSmall FlexLayout.Grow="6"
                                               HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
                                               Margin="2.5, 0"

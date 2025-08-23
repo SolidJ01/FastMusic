@@ -12,6 +12,7 @@
              PlayPauseCommand="{Binding PlayPauseCommand}"
              NextCommand="{Binding NextCommand}"
              PreviousCommand="{Binding PreviousCommand}"
+             ShuffleCommand="{Binding ShuffleCommand}"
              IsPlaying="{Binding IsPlaying}">
     <CollectionView ItemsSource="{Binding Albums, Mode=OneWay}" ItemSizingStrategy="MeasureFirstItem">
         <CollectionView.Header>

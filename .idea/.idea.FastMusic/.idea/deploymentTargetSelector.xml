@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="FastMusicMobile">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-07-30T11:46:02.269635Z">
+        <DropdownSelection timestamp="2025-08-18T18:37:30.594050500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=QV7700QCEC" />

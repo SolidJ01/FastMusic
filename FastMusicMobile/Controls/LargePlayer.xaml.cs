@@ -16,6 +16,7 @@ public partial class LargePlayer : ContentView
     public static BindableProperty PlayPauseCommandProperty = BindableProperty.Create(nameof(PlayPauseCommand), typeof(ICommand), typeof(LargePlayer), null);
     public static BindableProperty NextCommandProperty = BindableProperty.Create(nameof(NextCommand), typeof(ICommand), typeof(LargePlayer), null);
     public static BindableProperty PreviousCommandProperty = BindableProperty.Create(nameof(PreviousCommand), typeof(ICommand), typeof(LargePlayer), null);
+    public static BindableProperty ShuffleCommandProperty = BindableProperty.Create(nameof(ShuffleCommand), typeof(ICommand), typeof(LargePlayer));
 
     private static void IsActiveChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
@@ -66,6 +67,12 @@ public partial class LargePlayer : ContentView
     {
         get => (ICommand)GetValue(PreviousCommandProperty);
         set => SetValue(PreviousCommandProperty, value);
+    }
+
+    public ICommand ShuffleCommand
+    {
+        get => (Command)GetValue(ShuffleCommandProperty);
+        set => SetValue(ShuffleCommandProperty, value);
     }
 
     public ICommand HideCommand { get; private set; }

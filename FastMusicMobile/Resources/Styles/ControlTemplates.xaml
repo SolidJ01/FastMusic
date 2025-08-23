@@ -60,7 +60,8 @@
                                   IsPlaying="{Binding IsPlaying}"
                                   PlayPauseCommand="{Binding PlayPauseCommand}"
                                   NextCommand="{Binding NextCommand}"
-                                  PreviousCommand="{Binding PreviousCommand}">
+                                  PreviousCommand="{Binding PreviousCommand}"
+                                  ShuffleCommand="{Binding ShuffleCommand}">
                 
             </controls:LargePlayer>
         </Grid>
