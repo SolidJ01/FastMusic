@@ -103,7 +103,6 @@ public partial class LargePlayer : ContentView
 
     private void Grid_OnSizeChanged(object? sender, EventArgs e)
     {
-        
         if (Grid.TranslationY != 0)
             return;
         Grid.TranslationY = Grid.Height;
@@ -115,10 +114,18 @@ public partial class LargePlayer : ContentView
         {
             case GestureStatus.Running:
                 Carousel.TranslationX += e.TotalX;
-                Carousel.TranslationX = double.Clamp(Carousel.TranslationX, -Carousel.Width, 0);
+                Carousel.TranslationX = double.Clamp(Carousel.TranslationX, Grid.Width - Carousel.Width, 0);
                 break;
             case GestureStatus.Completed:
-                
+                double value = double.Abs(Carousel.TranslationX % Grid.Width);
+                if (value <= Grid.Width / 2)
+                {
+                    Carousel.TranslateTo(Carousel.TranslationX - value, 0, 250U, Easing.CubicInOut);
+                }
+                else
+                {
+                    Carousel.TranslateTo(Carousel.TranslationX + (Grid.Width - value),  0, 250U, Easing.CubicInOut);
+                }
                 break;
         }
     }
