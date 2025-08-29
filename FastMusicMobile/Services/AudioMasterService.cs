@@ -51,7 +51,7 @@ namespace FastMusicMobile.Services
 
         public Song? CurrentlyPlaying
         {
-            get { return _currentCollection.Count == 0 ? null : _currentCollection.First(); }
+            get { return _currentCollection?.Count == 0 ? null : _currentCollection?.First(); }
         }
 
         public bool IsPlaying => _audioService.IsPlaying;
@@ -184,6 +184,12 @@ namespace FastMusicMobile.Services
             {
                 _currentCollection.Insert(0, _currentCollectionPlayed.Last());
                 _currentCollectionPlayed.RemoveAt(_currentCollectionPlayed.Count - 1);
+                PlaySong(CurrentlyPlaying);
+            }
+            else
+            {
+                _currentCollection.Insert(0, _currentCollection.Last());
+                _currentCollection.RemoveAt(_currentCollection.Count - 1);
                 PlaySong(CurrentlyPlaying);
             }
         }

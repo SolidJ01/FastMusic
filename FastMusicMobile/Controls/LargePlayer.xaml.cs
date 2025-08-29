@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,6 +76,8 @@ public partial class LargePlayer : ContentView
         set => SetValue(ShuffleCommandProperty, value);
     }
 
+    private double _panX = 0;
+
     public ICommand HideCommand { get; private set; }
 
     public LargePlayer()
@@ -90,18 +93,33 @@ public partial class LargePlayer : ContentView
 
     private async void AnimateHide()
     {
-        await Grid.TranslateTo(0, Grid.Height, 250U);
+        await Grid.TranslateTo(0, Grid.Height, 250U, Easing.CubicInOut);
     }
 
     public async void Show()
     {
-        await Grid.TranslateTo(0, 0, 250U);
+        await Grid.TranslateTo(0, 0, 250U, Easing.CubicInOut);
     }
 
     private void Grid_OnSizeChanged(object? sender, EventArgs e)
     {
+        
         if (Grid.TranslationY != 0)
             return;
         Grid.TranslationY = Grid.Height;
+    }
+
+    private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        switch (e.StatusType)
+        {
+            case GestureStatus.Running:
+                Carousel.TranslationX += e.TotalX;
+                Carousel.TranslationX = double.Clamp(Carousel.TranslationX, -Carousel.Width, 0);
+                break;
+            case GestureStatus.Completed:
+                
+                break;
+        }
     }
 }

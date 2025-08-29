@@ -10,65 +10,83 @@
           RowDefinitions="*, 70"
           BackgroundColor="{StaticResource Secondary}"
           SizeChanged="Grid_OnSizeChanged">
-        <FlexLayout Direction="Column"
-                    JustifyContent="Center"
-                    AlignContent="Center"
-                    Padding="10, 70, 10, 0">
-            <Border Background="{StaticResource Gradient}"
-                    HeightRequest="{Binding Width, Source={RelativeSource Self}}"
-                    StrokeShape="RoundRectangle 12">
-                <Grid>
-                    <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="170" HorizontalOptions="Center" VerticalOptions="Center" />
-                    <Image Source="{Binding CurrentlyPlaying.Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}, Mode=OneWay}" Aspect="AspectFill" />
-                </Grid>
-            </Border>
-            <Label Text="{Binding CurrentlyPlaying.Name}" FontAttributes="Bold" FontSize="24" Padding="10, 10, 10, 0" />
-            <Label Text="{Binding CurrentlyPlaying.Artist}" FontSize="14" Padding="10, 0, 10, 10" />
-            <Grid>
-                <FlexLayout Direction="Row"
-                            JustifyContent="Center"
-                            AlignItems="Center"
-                            HeightRequest="{Binding Height, Source={x:Reference BigButton}}">
-                    <controls:IconButtonSmall FlexLayout.Grow="5"
-                                              HeightRequest="{Binding Width, Source={RelativeSource Self}}"
-                                              Margin="0, 0, 2.5, 0"
-                                              Icon="&#xf074;"
-                                              Command="{Binding ShuffleCommand}" />
-                    <controls:IconButtonSmall FlexLayout.Grow="6"
-                                              HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
-                                              Margin="2.5, 0"
-                                              Icon="&#xf048;" 
-                                              FontSize="28.8"
-                                              Command="{Binding PreviousCommand}" />
-                    <controls:IconButtonSmall FlexLayout.Grow="7"
-                                              x:Name="BigButton"
-                                              HeightRequest="{Binding Width, Source={RelativeSource Self}}"
-                                              Margin="2.5, 0"
-                                              Icon="&#xf04b;"
-                                              FontSize="33.6"
-                                              Command="{Binding PlayPauseCommand}">
-                        <controls:IconButtonSmall.Triggers>
-                            <DataTrigger TargetType="controls:IconButtonSmall"
-                                         Binding="{Binding IsPlaying, Mode=OneWay}"
-                                         Value="True">
-                                <Setter Property="controls:IconButtonSmall.Icon" Value="&#xf04c;" />
-                            </DataTrigger>
-                        </controls:IconButtonSmall.Triggers>
-                    </controls:IconButtonSmall>
-                    <controls:IconButtonSmall FlexLayout.Grow="6"
-                                              HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
-                                              Margin="2.5, 0"
-                                              Icon="&#xf051;" 
-                                              FontSize="28.8"
-                                              Command="{Binding NextCommand}" />
-                    <controls:IconButtonSmall FlexLayout.Grow="5" 
-                                              HeightRequest="{Binding Width, Source={RelativeSource Self}}"
-                                              Margin="2.5, 0, 0, 0"
-                                              Icon="&#xf363;" />
-                </FlexLayout>
-            </Grid>
+        <Grid.GestureRecognizers>
+            <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+        </Grid.GestureRecognizers>
+        <StackLayout x:Name="Carousel"
+                     Orientation="Horizontal"
+                     BackgroundColor="{StaticResource Orange500}">
+            <!--<StackLayout.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+            </StackLayout.GestureRecognizers>-->
             
-        </FlexLayout>
+            <FlexLayout Direction="Column"
+                        JustifyContent="Center"
+                        AlignContent="Center"
+                        Padding="10, 70, 10, 0"
+                        WidthRequest="{Binding Width, Source={x:Reference Grid}}"
+                        HeightRequest="{Binding Height, Source={RelativeSource AncestorType={x:Type HorizontalStackLayout}}}">
+                <Border Background="{StaticResource Gradient}"
+                        HeightRequest="{Binding Width, Source={RelativeSource Self}}"
+                        StrokeShape="RoundRectangle 12">
+                    <Grid>
+                        <Label Text="&#xf51f;" FontFamily="FASolid" FontSize="170" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Image Source="{Binding CurrentlyPlaying.Thumbnail, Converter={StaticResource ByteArrayToImageSourceConverter}, Mode=OneWay}" Aspect="AspectFill" />
+                    </Grid>
+                </Border>
+                <Label Text="{Binding CurrentlyPlaying.Name}" FontAttributes="Bold" FontSize="24" Padding="10, 10, 10, 0" />
+                <Label Text="{Binding CurrentlyPlaying.Artist}" FontSize="14" Padding="10, 0, 10, 10" />
+                <Grid>
+                    <FlexLayout Direction="Row"
+                                JustifyContent="Center"
+                                AlignItems="Center"
+                                HeightRequest="{Binding Height, Source={x:Reference BigButton}}">
+                        <controls:IconButtonSmall FlexLayout.Grow="5"
+                                                  HeightRequest="{Binding Width, Source={RelativeSource Self}}"
+                                                  Margin="0, 0, 2.5, 0"
+                                                  Icon="&#xf074;"
+                                                  Command="{Binding ShuffleCommand}" />
+                        <controls:IconButtonSmall FlexLayout.Grow="6"
+                                                  HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
+                                                  Margin="2.5, 0"
+                                                  Icon="&#xf048;" 
+                                                  FontSize="28.8"
+                                                  Command="{Binding PreviousCommand}" />
+                        <controls:IconButtonSmall FlexLayout.Grow="7"
+                                                  x:Name="BigButton"
+                                                  HeightRequest="{Binding Width, Source={RelativeSource Self}}"
+                                                  Margin="2.5, 0"
+                                                  Icon="&#xf04b;"
+                                                  FontSize="33.6"
+                                                  Command="{Binding PlayPauseCommand}">
+                            <controls:IconButtonSmall.Triggers>
+                                <DataTrigger TargetType="controls:IconButtonSmall"
+                                             Binding="{Binding IsPlaying, Mode=OneWay}"
+                                             Value="True">
+                                    <Setter Property="controls:IconButtonSmall.Icon" Value="&#xf04c;" />
+                                </DataTrigger>
+                            </controls:IconButtonSmall.Triggers>
+                        </controls:IconButtonSmall>
+                        <controls:IconButtonSmall FlexLayout.Grow="6"
+                                                  HeightRequest="{Binding Width, Source={RelativeSource Self}}" 
+                                                  Margin="2.5, 0"
+                                                  Icon="&#xf051;" 
+                                                  FontSize="28.8"
+                                                  Command="{Binding NextCommand}" />
+                        <controls:IconButtonSmall FlexLayout.Grow="5" 
+                                                  HeightRequest="{Binding Width, Source={RelativeSource Self}}"
+                                                  Margin="2.5, 0, 0, 0"
+                                                  Icon="&#xf363;" />
+                    </FlexLayout>
+                </Grid>
+                
+            </FlexLayout>
+            
+            <CollectionView WidthRequest="{Binding Width, Source={x:Reference Grid}}"
+                            HeightRequest="{Binding Height, Source={RelativeSource AncestorType={x:Type HorizontalStackLayout}}}">
+                
+            </CollectionView>
+        </StackLayout>
         
         
         <controls:IconButtonSmall Grid.Row="1" Margin="10" Icon="&#xf107;" Command="{Binding HideCommand}" />
